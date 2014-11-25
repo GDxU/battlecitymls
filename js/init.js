@@ -1,6 +1,10 @@
 window.onload=function(){
 	cv =  document.getElementById("cv");
 	cvx = cv.getContext("2d");
+	cv.setAttribute("width", cvx_width);
+    cv.setAttribute("height",cvx_height);
+
+
 	tanks.push(new tank({ismain:1}));
 	run_animate();
 	move_timer();
@@ -20,7 +24,6 @@ window.onload=function(){
         		press_key.L=1;
         	break;
         	case ctr_key.R:
-        		clear_press_key();
         		press_key.R=1;
         	break;
         	case ctr_key.U:
@@ -37,16 +40,16 @@ window.onload=function(){
 	  	 var keycode = e.keyCode;
         switch(keycode){
         	case ctr_key.L:
-        		clear_press_key();
+        		press_key.L=0;
         	break;
         	case ctr_key.R:
-        		clear_press_key();
+        		press_key.R=0;
         	break;
         	case ctr_key.U:
-        		clear_press_key();
-        		break;
+        		press_key.U=0;
+        	break;
         	case ctr_key.D:
-        		clear_press_key();
+        		press_key.D=0;
         	break;
         }
 	  },false);
