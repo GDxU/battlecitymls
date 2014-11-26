@@ -4,8 +4,17 @@ window.onload = function () {
     cv.setAttribute("width", cvx_width);
     cv.setAttribute("height", cvx_height);
 
+    tanks.push(new tank({
+        img: "img/enemy2D.gif",
+        attack_interval:1000
+    }));
 
-    tanks.push(new tank({ ismain: 1 }));
+    tanks.push(new tank({
+        ismain: 1,
+        move_px:1.5,
+        position_y: cvx_height - tank_size,
+        position_x: cvx_width/2 - tank_size/2
+    }));
     run_animate();
     move_timer();
 

@@ -19,7 +19,6 @@ Hz_timer = null,	//刷新定时器
 move_timer = null,	//移动定时器
 attack_timer = null,	//攻击定时器
 move_speed = 1,	//坦克移动频率
-move_px = 2;		//每次移动像素
 cv = null,
 cvx = null,
 cvx_width = 1000, //canvas宽度
