@@ -25,5 +25,6 @@ cvx_width = 1000, //canvas宽度
 cvx_height = 700, //canvas高度
 tank_size = 60, //坦克大小
 bullet_size = 15, //坦克大小
-tank_ident = 1, //C
+bullet_ident=1,  //子弹自增标识
+tank_ident = 1, //坦克自增标识
 bullet_move_speed = 5;	//子弹移动频率

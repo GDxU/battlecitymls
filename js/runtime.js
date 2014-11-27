@@ -10,3 +10,14 @@ function run_animate() {
     }, Hz);
 }
 
+function arr_removebyid(arr,id) {
+    var temp_arr = [];
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].id != id) {
+            temp_arr.push(arr[i]);
+        } else {
+            arr[i] = null;
+        }
+    }
+    return temp_arr
+}

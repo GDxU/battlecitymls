@@ -3,17 +3,20 @@ window.onload = function () {
     cvx = cv.getContext("2d");
     cv.setAttribute("width", cvx_width);
     cv.setAttribute("height", cvx_height);
-
-    tanks.push(new tank({
-        img: "img/enemy2D.gif",
-        attack_interval:1000
-    }));
-
+    for (var i = 0; i < 20; i++) {
+        setTimeout(function () {
+            tanks.push(new tank({
+                img: "img/enemy2D.gif",
+                attack_interval: 1000
+            }));
+        },i*1000)
+       
+    }
     tanks.push(new tank({
         ismain: 1,
-        move_px:1.5,
+        move_px: 1.5,
         position_y: cvx_height - tank_size,
-        position_x: cvx_width/2 - tank_size/2
+        position_x: cvx_width / 2 - tank_size / 2
     }));
     run_animate();
     move_timer();

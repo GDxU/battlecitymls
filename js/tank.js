@@ -8,6 +8,9 @@ function tank(opts) {
     this.ismain = 0;    //是否是主机控制
     this.attack_interval = 500; //攻击间隔
     this.attack_timer = null;   //攻击计时器
+    this.del_status = 11;   //删除状态
+    this.del_timer = null;   //删除计时器
+    this.isdel = false;     //是否已死亡
     this.direction = "U";    //所朝方向
     if (opts) {
         for (var o in opts) {
@@ -15,11 +18,15 @@ function tank(opts) {
         }
     }
 
+    this.ai_timer = null;   //智能电脑计时器
     //智能电脑
     if (!this.ismain) {
-        setInterval((function ($t) {
+        this.ai_timer = setInterval((function ($t) {
             return function () {
                 var mn = get_main_tank();
+                if (mn == null) {
+                    return;
+                }
                 //自动行走 走 x 或 y
                 if (Math.abs($t.position_x - mn.position_x) > tank_size / 3) {
                     //走x
@@ -42,14 +49,12 @@ function tank(opts) {
             }
         })(this), 1)
     }
-
-
 }
 
 //绘制坦克
 tank.prototype.drwa = function () {
     var beauty = new Image();
-    beauty.src = this.img
+    beauty.src = this.img;
     cvx.drawImage(beauty, this.position_x, this.position_y, tank_size, tank_size);
 }
 tank.prototype.move_U = function () {
@@ -146,6 +151,22 @@ tank.prototype.attack = function () {
         position_x: x,
         position_y: y
     }));
+}
+tank.prototype.del = function () {
+    clearInterval(this.ai_timer)
+    clearInterval(this.attack_timer);
+    this.isdel = true;
+    this.del_timer = setInterval((function ($t) {
+        return function () {
+            if ($t.del_status < 1) {
+                tanks = arr_removebyid(tanks, $t.id);
+                clearInterval($t.del_timer);
+                return;
+            }
+            $t.img = "img/blast" + $t.del_status + ".gif";
+            $t.del_status--;
+        }
+    })(this), 20)
 }
 
 //获得主机控制的坦克
