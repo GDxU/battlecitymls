@@ -1,6 +1,7 @@
 ﻿function bullet(opts) {
     this.id = bullet_ident++;
     this.tankid = 0;
+    this.ismain = 1;
     this.direction = "";
     this.img = "img/tankmissile.gif";
     this.position_x = 0;
@@ -65,30 +66,33 @@ bullet.prototype.collision_judge = function () {
     x2 = this.position_x + bullet_size,
     y1 = this.position_y,
     y2 = this.position_y + bullet_size;
-
-
     for (var i = 0; i < tanks.length; i++) {
         var t = tanks[i];
-        if (t.id != this.tankid) {
+        if (this.ismain != t.ismain) {
             var t_x1 = t.position_x,
             t_x2 = t.position_x + tank_size,
             t_y1 = t.position_y,
             t_y2 = t.position_y + tank_size;
-
-
             if ((t_x1 < x1 && x1 < t_x2) && (t_y1 < y1 && y1 < t_y2)) {
                 t.del();
-
+                this.del();
             } else if ((t_x1 < x2 && x2 < t_x2) && (t_y1 < y1 && y1 < t_y2)) {
                 t.del();
-
+                this.del();
             } else if ((t_x1 < x1 && x1 < t_x2) && (t_y1 < y2 && y2 < t_y2)) {
                 t.del();
-
+                this.del();
             } else if ((t_x1 < x2 && x2 < t_x2) && (t_y1 < y2 && y2 < t_y2)) {
                 t.del();
-
+                this.del();
             }
         }
+    }
+}
+
+bullet.prototype.get_tank = function () {
+    for (var i = 0; i < tanks.length; i++) {
+        if (this.tankid == tanks[i].id)
+            return tanks[i];
     }
 }

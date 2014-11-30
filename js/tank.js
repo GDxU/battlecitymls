@@ -6,7 +6,7 @@ function tank(opts) {
     this.position_y = 0;
     this.move_px = 0.7;
     this.ismain = 0;    //是否是主机控制
-    this.attack_interval = 500; //攻击间隔
+    this.attack_interval = 800; //攻击间隔
     this.attack_timer = null;   //攻击计时器
     this.del_status = 11;   //删除状态
     this.del_timer = null;   //删除计时器
@@ -19,33 +19,64 @@ function tank(opts) {
     }
 
     this.ai_timer = null;   //智能电脑计时器
+    this.ai_wheel_timer = 0;   //智能电脑转弯计时器
+    this.ai_wheel_timer = 0;
+
+    this.ai_move_timer = setInterval((function ($t) {
+        return function () {
+            Math.random() > 0.7 && ($t.ai_wheel_timer = 1);
+        }
+    })(this), tank_config.ai_wheel_interval);
+
     //智能电脑
     if (!this.ismain) {
         this.ai_timer = setInterval((function ($t) {
             return function () {
-                var mn = get_main_tank();
-                if (mn == null) {
-                    return;
+                if ($t.ai_wheel_timer && Math.random() > 0.4) {
+                    $t.ai_wheel_timer = 0;
+                    $t[["move_U", "move_D", "move_R", "move_L"][Math.floor(Math.random() * 4)]]();
                 }
-                //自动行走 走 x 或 y
-                if (Math.abs($t.position_x - mn.position_x) > tank_size / 3) {
-                    //走x
-                    if ($t.position_x < mn.position_x) {
-                        $t.move_R();
+                else if ($t.ai_wheel_timer) {
+                    $t.ai_wheel_timer = 0;
+                    var mn = get_main_tank();
+                    if (mn == null) {
+                        return;
+                    }
+                    //自动行走 走 x 或 y
+                    if (Math.abs($t.position_x - mn.position_x) > tank_size / 3) {
+                        //走x
+                        if ($t.position_x < mn.position_x) {
+                            $t.move_R();
+                        } else {
+                            $t.move_L();
+                        }
                     } else {
-                        $t.move_L();
+                        //y
+                        if ($t.position_y < mn.position_y) {
+                            $t.move_D();
+                        } else {
+                            $t.move_U();
+                        }
                     }
                 } else {
-                    //y
-                    if ($t.position_y < mn.position_y) {
-                        $t.move_D();
-                    } else {
-                        $t.move_U();
+                    switch ($t.direction) {
+                        case "U":
+                            $t.move_U();
+                            break;
+                        case "D":
+                            $t.move_D();
+                            break;
+                        case "R":
+                            $t.move_R();
+                            break;
+                        case "L":
+                            $t.move_L();
+                            break;
                     }
                 }
-
                 //攻击
-                $t.attack();
+                Math.random() > tank_config.ai_attack_p && $t.attack();
+
             }
         })(this), 1)
     }
@@ -64,11 +95,12 @@ tank.prototype.move_U = function () {
     this.position_y -= this.move_px;
     if (this.position_y < 0) {
         //超出边界
-        this.position_y = 0;
+        temp_positon = 0;
     }
     //判断碰撞
-    if (move_collision_judge.call(this)) {
+    if (this.move_collision_judge() || this.position_y < 0) {
         this.position_y = temp_positon;
+        (!this.ismain && Math.random() > tank_config.ai_collision_wheel_p) && this.move_R();
     }
 }
 tank.prototype.move_D = function () {
@@ -78,11 +110,12 @@ tank.prototype.move_D = function () {
     this.position_y += this.move_px;
     if (this.position_y > cvx_height - tank_size) {
         //超出边界
-        this.position_y = cvx_height - tank_size;
+        temp_positon = cvx_height - tank_size;
     }
     //判断碰撞
-    if (move_collision_judge.call(this)) {
+    if (this.move_collision_judge() || this.position_y > cvx_height - tank_size) {
         this.position_y = temp_positon;
+        (!this.ismain && Math.random() > tank_config.ai_collision_wheel_p) && this.move_L();
     }
 }
 tank.prototype.move_L = function () {
@@ -92,11 +125,12 @@ tank.prototype.move_L = function () {
     this.position_x -= this.move_px;
     if (this.position_x < 0) {
         //超出边界
-        this.position_x = 0;
+        temp_positon = 0;
     }
     //判断碰撞
-    if (move_collision_judge.call(this)) {
+    if (this.move_collision_judge() || this.position_x < 0) {
         this.position_x = temp_positon;
+        (!this.ismain && Math.random() > tank_config.ai_collision_wheel_p) && this.move_U();
     }
 }
 tank.prototype.move_R = function () {
@@ -106,11 +140,12 @@ tank.prototype.move_R = function () {
     this.position_x += this.move_px;
     if (this.position_x > cvx_width - tank_size) {
         //超出边界
-        this.position_x = cvx_width - tank_size;
+        temp_positon = cvx_width - tank_size;
     }
     //判断碰撞
-    if (move_collision_judge.call(this)) {
+    if (this.move_collision_judge() || this.position_x > cvx_width - tank_size) {
         this.position_x = temp_positon;
+        (!this.ismain && Math.random() > tank_config.ai_collision_wheel_p) && this.move_D();
     }
 }
 
@@ -149,12 +184,14 @@ tank.prototype.attack = function () {
         tankid: this.id,
         direction: this.direction,
         position_x: x,
-        position_y: y
+        position_y: y,
+        ismain: this.ismain
     }));
 }
 tank.prototype.del = function () {
     clearInterval(this.ai_timer)
     clearInterval(this.attack_timer);
+    clearInterval(this.ai_move_timer);
     this.isdel = true;
     this.del_timer = setInterval((function ($t) {
         return function () {
@@ -193,14 +230,13 @@ function move_timer() {
     }, move_speed);
 }
 //坦克移动时碰撞判定
-function move_collision_judge() {
+tank.prototype.move_collision_judge = function () {
     //当前移动的坦克四个角所在位置
     var x1 = this.position_x,
     x2 = this.position_x + tank_size,
     y1 = this.position_y,
     y2 = this.position_y + tank_size,
     collision = false;//是否发生碰撞
-
     for (var i = 0; i < tanks.length; i++) {
         var t = tanks[i];
         if (t.id != this.id) {
@@ -212,13 +248,13 @@ function move_collision_judge() {
 
             //在坦克的x中间 判断y是不是也在坦克的y中间，是则发生碰撞
             //判断四个角
-            if ((t_x1 < x1 && x1 < t_x2) && (t_y1 < y1 && y1 < t_y2)) {
+            if ((t_x1 <= x1 && x1 <= t_x2) && (t_y1 <= y1 && y1 <= t_y2)) {
                 collision = true;
-            } else if ((t_x1 < x2 && x2 < t_x2) && (t_y1 < y1 && y1 < t_y2)) {
+            } else if ((t_x1 <= x2 && x2 <= t_x2) && (t_y1 <= y1 && y1 <= t_y2)) {
                 collision = true;
-            } else if ((t_x1 < x1 && x1 < t_x2) && (t_y1 < y2 && y2 < t_y2)) {
+            } else if ((t_x1 <= x1 && x1 <= t_x2) && (t_y1 <= y2 && y2 <= t_y2)) {
                 collision = true;
-            } else if ((t_x1 < x2 && x2 < t_x2) && (t_y1 < y2 && y2 < t_y2)) {
+            } else if ((t_x1 <= x2 && x2 <= t_x2) && (t_y1 <= y2 && y2 <= t_y2)) {
                 collision = true;
             }
         }
@@ -241,4 +277,16 @@ function attack_start() {
 function attck_stop() {
     clearInterval(attack_timer);
     attack_timer = null;
+}
+
+tank.new_tank = function (opt) {
+    var t = new tank(opt);
+    if (t.move_collision_judge()) {
+        //   for (var x = t.position_x; i < cvx_width - tank_size; i++) {
+
+        //   }
+        t.del();
+        return;
+    }
+    tanks.push(t);
 }
