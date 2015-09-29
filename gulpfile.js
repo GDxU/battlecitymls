@@ -1,6 +1,7 @@
-﻿var gulp = require('gulp');
-var ts = require('gulp-typescript');
-var merge = require('merge2');
+﻿var gulp = require('gulp'),
+    ts = require('gulp-typescript'),
+    plumber = require('gulp-plumber'),
+    merge = require('merge2');
 
 var tsProject = ts.createProject({
     declaration: true,
@@ -9,7 +10,8 @@ var tsProject = ts.createProject({
 var tspath = 'tsjs/*.ts';
 gulp.task('buildts', function () {
     var tsResult = gulp.src(tspath)
-                    .pipe(ts(tsProject));
+        .pipe(plumber())
+        .pipe(ts(tsProject));
 
     return tsResult.js.pipe(gulp.dest('js'));
 });
