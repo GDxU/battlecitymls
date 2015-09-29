@@ -1,7 +1,7 @@
 ﻿
 
 module common {
-    interface imageloadcall {
+    export interface imageloadcall {
         (img: HTMLImageElement, base64: string): void
     }
 

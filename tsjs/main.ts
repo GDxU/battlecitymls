@@ -12,7 +12,22 @@ module game {
         stl.width = config.maxWidth + "px";
         stl.height = config.maxHeight + "px";
 
+        loadImgs();
+        load.onload = function () {
+            start();
+        }
+    }
 
+    var loadImgs = function () {
+        game.load.image("p1tank", "img/p1tank.gif");
+    }
+    var start = function () {
+        //开始游戏
+        game.playing.
+
+
+
+        console.log("start");
         draw();
     }
 }

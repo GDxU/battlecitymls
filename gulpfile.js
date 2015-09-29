@@ -5,7 +5,8 @@
 
 var tsProject = ts.createProject({
     declaration: true,
-    noExternalResolve: true
+    noExternalResolve: true,
+    target: "es5"
 });
 var tspath = 'tsjs/*.ts';
 gulp.task('buildts', function () {
