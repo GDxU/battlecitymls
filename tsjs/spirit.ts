@@ -12,9 +12,8 @@ module game {
         id: string;
         point: point;
         private image: HTMLImageElement;
-        set imgSrc(src: string) {
-            this.image = new Image();
-            this.image.src = src;
+        set imgKey(key: string) {
+            this.image = game.source.images[key].img;
         }
 
         constructor(point: point) {
