@@ -1,10 +1,13 @@
-﻿interface point {
-    width: number;
-    height: number;
-    x: number;
-    y: number;
-}
+﻿
 module game {
+
+    export interface point {
+        width: number;
+        height: number;
+        x: number;
+        y: number;
+    }
+
     export class spirit {
         id: string;
         point: point;

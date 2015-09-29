@@ -11,6 +11,8 @@ module game {
         stl.backgroundColor = "#000";
         stl.width = config.maxWidth + "px";
         stl.height = config.maxHeight + "px";
+
+
         draw();
     }
 }
