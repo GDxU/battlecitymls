@@ -7,9 +7,11 @@ var game;
 (function (game) {
     var tank = (function (_super) {
         __extends(tank, _super);
-        function tank(point) {
-            _super.call(this, point);
+        function tank(imgKey, point) {
+            _super.call(this, imgKey, point);
         }
+        tank.prototype.draw = function (canvas) {
+        };
         return tank;
     })(game.spirit);
     game.tank = tank;

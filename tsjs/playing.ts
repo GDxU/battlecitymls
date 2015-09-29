@@ -4,13 +4,13 @@
         //Spirits
         private spirits: spirit[] = [];
         //添加Spirit
-        addSpirit = (tank: spirit) => {
-            this.spirits.push(tank);
+        addSpirit = (spirit: spirit) => {
+            this.spirits.push(spirit);
         };
         //删除Spirit
-        removeSpirit = (tank: spirit) => {
+        removeSpirit = (spirit: spirit) => {
             this.spirits.filter(function (value) {
-                if (value.id === tank.id) {
+                if (value.id === spirit.id) {
                     return false;
                 }
                 return true;

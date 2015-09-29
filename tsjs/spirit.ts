@@ -16,9 +16,13 @@ module game {
             this.image = game.source.images[key].img;
         }
 
-        constructor(point: point) {
+        constructor(imgKey: string, point: point) {
             this.point = point;
             this.id = common.newId();
+            this.imgKey = imgKey;
+        }
+        draw(canvas: HTMLCanvasElement) {
+
         }
     }
 }
