@@ -7,13 +7,13 @@ var game;
             //Spirits
             this.spirits = [];
             //添加Spirit
-            this.addSpirit = function (tank) {
-                _this.spirits.push(tank);
+            this.addSpirit = function (spirit) {
+                _this.spirits.push(spirit);
             };
             //删除Spirit
-            this.removeSpirit = function (tank) {
+            this.removeSpirit = function (spirit) {
                 _this.spirits.filter(function (value) {
-                    if (value.id === tank.id) {
+                    if (value.id === spirit.id) {
                         return false;
                     }
                     return true;

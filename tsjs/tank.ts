@@ -1,7 +1,12 @@
 ﻿module game {
     export class tank extends spirit {
-        constructor(point?: point) {
-            super(point);
+        constructor(imgKey: string,point?: point) {
+            super(imgKey,point);
+        }
+
+        draw(canvas: HTMLCanvasElement) {
+
+
         }
     }
 }

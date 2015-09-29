@@ -1,10 +1,9 @@
 ﻿
 module game {
     export var canvas: HTMLCanvasElement;
-    export var cvx: CanvasRenderingContext2D;
+    export var scene: playing;
     export function init() {
         canvas = document.createElement("canvas");
-        cvx = canvas.getContext("2d");
         document.body.appendChild(canvas);
 
         var stl = canvas.style;
@@ -23,13 +22,18 @@ module game {
     }
     var start = function () {
         //开始游戏
-        game.playing.
 
-
+        scene = new game.playing(canvas);
+        var p1 = new game.tank("p1tank",{
+            x: 0,
+            y: 0,
+            width: config.tankWidth,
+            height: config.tankHeight
+        });
+        scene.addSpirit(p1);
 
         console.log("start");
-        draw();
-    }
+    };
 }
 window.addEventListener("load", function () {
     game.init();

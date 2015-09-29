@@ -2,7 +2,6 @@ var game;
 (function (game) {
     function init() {
         game.canvas = document.createElement("canvas");
-        game.cvx = game.canvas.getContext("2d");
         document.body.appendChild(game.canvas);
         var stl = game.canvas.style;
         stl.backgroundColor = "#000";
@@ -19,9 +18,15 @@ var game;
     };
     var start = function () {
         //开始游戏
-        game.playing.
-            console.log("start");
-        game.draw();
+        game.scene = new game.playing(game.canvas);
+        var p1 = new game.tank("p1tank", {
+            x: 0,
+            y: 0,
+            width: game.config.tankWidth,
+            height: game.config.tankHeight
+        });
+        game.scene.addSpirit(p1);
+        console.log("start");
     };
 })(game || (game = {}));
 window.addEventListener("load", function () {
