@@ -6,7 +6,7 @@
 
         draw(canvas: CanvasRenderingContext2D) {
 
-
+            super.draw(canvas);
         }
     }
 }

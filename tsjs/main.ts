@@ -5,28 +5,27 @@ module game {
     export function init() {
         canvas = document.createElement("canvas");
         document.body.appendChild(canvas);
-
-        var stl = canvas.style;
-        stl.backgroundColor = "#000";
-        stl.width = config.maxWidth + "px";
-        stl.height = config.maxHeight + "px";
+        canvas.width = config.maxWidth;
+        canvas.height = config.maxHeight;
+        canvas.style.backgroundColor = "#000";
 
         loadImgs();
         load.onload = function () {
-            start();
+             start();
         }
     }
 
     var loadImgs = function () {
         game.load.image("p1tank", "img/p1tank.gif");
+        game.load.image("bomb", "img/bomb.gif");
     }
     var start = function () {
         //开始游戏
 
         scene = new game.playing(canvas.getContext("2d"));
-        var p1 = new game.tank("p1tank", {
-            x: 0,
-            y: 0,
+        var p1 = new game.tank("bomb", {
+            x: 100,
+            y: 100,
             width: config.tankWidth,
             height: config.tankHeight
         });
