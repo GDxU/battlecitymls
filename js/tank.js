@@ -16,6 +16,7 @@ var game;
         __extends(tank, _super);
         function tank(imgKey, point) {
             _super.call(this, imgKey, point);
+            //#region 移动
             this.run = {
                 speed: 0,
                 sTime: 200,
@@ -25,9 +26,6 @@ var game;
                 isRuning: false
             };
             this.runingDirection = direction.U;
-            this.easeInQuad = function (x, t, b, c, d) {
-                return c * (t /= d) * t + b;
-            };
             this.run.speed = this.point.width / 2;
         }
         tank.prototype.draw = function (canvas) {
@@ -102,6 +100,10 @@ var game;
             this.run.endPoint = start + speed;
             this.runingDirection = direc;
             this.run.isRuning = true;
+        };
+        //#endregion
+        //#region 攻击
+        tank.prototype.attack = function () {
         };
         return tank;
     })(game.spirit);

@@ -15,11 +15,12 @@ var game;
     var loadImgs = function () {
         game.load.image("p1tank", "img/p1tank.gif");
         game.load.image("bomb", "img/bomb.gif");
+        game.load.image("tankmissile", "img/tankmissile.gif");
     };
     var start = function () {
         //开始游戏
         game.scene = new game.playing(game.canvas.getContext("2d"));
-        var p1 = new game.tank("p1tank", {
+        var p1 = new game.tank("bomb", {
             x: 0,
             y: 0,
             width: game.config.tankWidth,
