@@ -21,7 +21,7 @@ module game {
             this.id = common.newId();
             this.imgKey = imgKey;
         }
-        draw(canvas: HTMLCanvasElement) {
+        draw(canvas: CanvasRenderingContext2D) {
 
         }
     }
