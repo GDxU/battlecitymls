@@ -19,13 +19,25 @@ var game;
     var start = function () {
         //开始游戏
         game.scene = new game.playing(game.canvas.getContext("2d"));
-        var p1 = new game.tank("bomb", {
-            x: 100,
-            y: 100,
+        var p1 = new game.tank("p1tank", {
+            x: 0,
+            y: 0,
             width: game.config.tankWidth,
             height: game.config.tankHeight
         });
         game.scene.addSpirit(p1);
+        game.scene.addEventListener(game.playEven.longPressL, function () {
+            p1.moveL();
+        });
+        game.scene.addEventListener(game.playEven.longPressR, function () {
+            p1.moveR();
+        });
+        game.scene.addEventListener(game.playEven.longPressU, function () {
+            p1.moveU();
+        });
+        game.scene.addEventListener(game.playEven.longPressD, function () {
+            p1.moveD();
+        });
         console.log("start");
     };
 })(game || (game = {}));
