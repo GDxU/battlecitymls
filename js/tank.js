@@ -5,13 +5,103 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var game;
 (function (game) {
+    (function (direction) {
+        direction[direction["U"] = 0] = "U";
+        direction[direction["D"] = 1] = "D";
+        direction[direction["R"] = 2] = "R";
+        direction[direction["L"] = 3] = "L";
+    })(game.direction || (game.direction = {}));
+    var direction = game.direction;
     var tank = (function (_super) {
         __extends(tank, _super);
         function tank(imgKey, point) {
             _super.call(this, imgKey, point);
+            this.run = {
+                speed: 0,
+                sTime: 200,
+                startPoint: 0,
+                endPoint: 0,
+                startRunTime: 0,
+                isRuning: false
+            };
+            this.runingDirection = direction.U;
+            this.easeInQuad = function (x, t, b, c, d) {
+                return c * (t /= d) * t + b;
+            };
+            this.run.speed = this.point.width / 2;
         }
         tank.prototype.draw = function (canvas) {
+            if (this.run.isRuning) {
+                var t = +new Date - this.run.startRunTime, //花的时间
+                result, isComplete = false;
+                if (t > this.run.sTime) {
+                    result = this.run.endPoint;
+                    isComplete = true;
+                }
+                else {
+                    result = this.run.speed * t / this.run.sTime;
+                    if (this.run.endPoint < this.run.startPoint) {
+                        result = this.run.startPoint - result;
+                    }
+                    else {
+                        result = this.run.startPoint + result;
+                    }
+                }
+                if (this.runingDirection === direction.R || this.runingDirection === direction.L) {
+                    this.point.x = result;
+                }
+                if (this.runingDirection === direction.U || this.runingDirection === direction.D) {
+                    this.point.y = result;
+                }
+                if (isComplete) {
+                    //每次走完，执行下一次路程
+                    this.run.isRuning = false;
+                    if (this.nextMove) {
+                        //this.nextMove();
+                        this.nextMove = null;
+                    }
+                }
+            }
             _super.prototype.draw.call(this, canvas);
+        };
+        tank.prototype.moveL = function () {
+            if (this.run.isRuning) {
+                this.nextMove = this.moveL;
+                return;
+            }
+            this.rotate = 270;
+            this.move(this.point.x, -this.run.speed, direction.L);
+        };
+        tank.prototype.moveR = function () {
+            if (this.run.isRuning) {
+                this.nextMove = this.moveR;
+                return;
+            }
+            this.rotate = 90;
+            this.move(this.point.x, this.run.speed, direction.R);
+        };
+        tank.prototype.moveU = function () {
+            if (this.run.isRuning) {
+                this.nextMove = this.moveU;
+                return;
+            }
+            this.rotate = 0;
+            this.move(this.point.y, -this.run.speed, direction.U);
+        };
+        tank.prototype.moveD = function () {
+            if (this.run.isRuning) {
+                this.nextMove = this.moveD;
+                return;
+            }
+            this.rotate = 180;
+            this.move(this.point.y, this.run.speed, direction.D);
+        };
+        tank.prototype.move = function (start, speed, direc) {
+            this.run.startRunTime = +new Date();
+            this.run.startPoint = start;
+            this.run.endPoint = start + speed;
+            this.runingDirection = direc;
+            this.run.isRuning = true;
         };
         return tank;
     })(game.spirit);

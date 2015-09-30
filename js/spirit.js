@@ -3,6 +3,7 @@ var game;
     var spirit = (function () {
         function spirit(imgKey, point) {
             this.rotate = 0;
+            this.lastUpdateTime = 0;
             this.point = point;
             this.id = common.newId();
             this.imgKey = imgKey;
@@ -27,10 +28,18 @@ var game;
                 canvas.translate(dx, dy);
                 canvas.rotate(angle);
                 canvas.translate(-dx, -dx);
+            });
+            (function () {
+                var angle = this.rotate * Math.PI / 180;
+                var rx = this.point.x + this.point.width / 2, ry = this.point.y + this.point.height / 2; // the rotation x and y
+                canvas.translate(rx, ry);
+                canvas.rotate(angle);
+                canvas.translate(-rx, -ry);
             }).call(this);
             // #endregion
             canvas.drawImage(this.image, this.point.x, this.point.y, this.point.width, this.point.height);
             canvas.restore();
+            this.lastUpdateTime = +new Date();
         };
         return spirit;
     })();
