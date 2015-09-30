@@ -53,6 +53,8 @@
             super.draw(canvas);
         }
 
+        //#region 移动
+
 
         run = {
             speed: 0,  //每步走多少像素
@@ -108,9 +110,15 @@
 
 
         }
-        easeInQuad = function (x, t, b, c, d) {
-            return c * (t /= d) * t + b;
+
+        //#endregion
+
+        //#region 攻击
+
+        attack() {
+
         }
 
+        //#endregion
     }
 }
