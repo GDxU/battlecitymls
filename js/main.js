@@ -18,7 +18,7 @@ var game;
     };
     var start = function () {
         //开始游戏
-        game.scene = new game.playing(game.canvas);
+        game.scene = new game.playing(game.canvas.getContext("2d"));
         var p1 = new game.tank("p1tank", {
             x: 0,
             y: 0,

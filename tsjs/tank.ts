@@ -4,7 +4,7 @@
             super(imgKey,point);
         }
 
-        draw(canvas: HTMLCanvasElement) {
+        draw(canvas: CanvasRenderingContext2D) {
 
 
         }

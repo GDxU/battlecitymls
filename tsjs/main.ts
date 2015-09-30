@@ -23,8 +23,8 @@ module game {
     var start = function () {
         //开始游戏
 
-        scene = new game.playing(canvas);
-        var p1 = new game.tank("p1tank",{
+        scene = new game.playing(canvas.getContext("2d"));
+        var p1 = new game.tank("p1tank", {
             x: 0,
             y: 0,
             width: config.tankWidth,
