@@ -23,7 +23,7 @@ module common {
             canvas = ctx = null;
 
             img.onload = null;
-            callback.call(img, dataURL);
+            callback(img, dataURL);
 
         };
         img.src = url;

@@ -3,10 +3,9 @@ var game;
     function init() {
         game.canvas = document.createElement("canvas");
         document.body.appendChild(game.canvas);
-        var stl = game.canvas.style;
-        stl.backgroundColor = "#000";
-        stl.width = game.config.maxWidth + "px";
-        stl.height = game.config.maxHeight + "px";
+        game.canvas.width = game.config.maxWidth;
+        game.canvas.height = game.config.maxHeight;
+        game.canvas.style.backgroundColor = "#000";
         loadImgs();
         game.load.onload = function () {
             start();
@@ -15,13 +14,14 @@ var game;
     game.init = init;
     var loadImgs = function () {
         game.load.image("p1tank", "img/p1tank.gif");
+        game.load.image("bomb", "img/bomb.gif");
     };
     var start = function () {
         //开始游戏
         game.scene = new game.playing(game.canvas.getContext("2d"));
-        var p1 = new game.tank("p1tank", {
-            x: 0,
-            y: 0,
+        var p1 = new game.tank("bomb", {
+            x: 100,
+            y: 100,
             width: game.config.tankWidth,
             height: game.config.tankHeight
         });

@@ -11,6 +11,7 @@ var game;
             _super.call(this, imgKey, point);
         }
         tank.prototype.draw = function (canvas) {
+            _super.prototype.draw.call(this, canvas);
         };
         return tank;
     })(game.spirit);

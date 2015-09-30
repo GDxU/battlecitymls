@@ -1,6 +1,6 @@
 ﻿module game {
-    enum playEven {
-        onredraw
+    export enum playEven {
+        onredraw //重绘事件
     }
     //游戏场景
     export class playing {
@@ -9,7 +9,8 @@
         width: number;
         height: number;
         fps = 10000 / 60;
-        lasttime = new Date()
+        lasttime = new Date();
+        interval: number;
         constructor(canvas: CanvasRenderingContext2D) {
             this.canvas = canvas;
             this.canvasElement = canvas.canvas;
@@ -21,13 +22,14 @@
         init = () => {
             this.buildEvent();
             var self = this;
-            setInterval(function () {
-
+            this.interval = setInterval(function () {
+                self.lasttime = new Date();
                 self.redraw();
-
             }, this.fps);
         }
-        
+        close = () => {
+            clearInterval(this.interval);
+        }
         // 绑定事件
         buildEvent = () => {
 

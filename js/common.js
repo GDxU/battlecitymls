@@ -15,7 +15,7 @@ var common;
             dataURL = canvas.toDataURL(outputFormat || 'image/png');
             canvas = ctx = null;
             img.onload = null;
-            callback.call(img, dataURL);
+            callback(img, dataURL);
         };
         img.src = url;
     }
