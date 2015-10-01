@@ -95,7 +95,7 @@ var game;
             };
             //删除Spirit
             this.removeSpirit = function (spirit) {
-                _this.spirits.filter(function (value) {
+                _this.spirits = _this.spirits.filter(function (value) {
                     if (value.id === spirit.id) {
                         return false;
                     }
@@ -114,7 +114,13 @@ var game;
                 }
                 // #endregion
                 _this.canvas.clearRect(0, 0, _this.width, _this.height);
-                for (var i = 0, len = _this.spirits.length; i < len; i++) {
+                for (var i = 0; i < _this.spirits.length; i++) {
+                    if (_this.spirits[i].isDel) {
+                        //排除已经删除的
+                        _this.removeSpirit(_this.spirits[i]);
+                        i--;
+                        continue;
+                    }
                     _this.spirits[i].draw(_this.canvas);
                 }
             };

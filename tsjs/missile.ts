@@ -5,7 +5,6 @@
             this.runingDirection = direc;
         }
         draw(canvas: CanvasRenderingContext2D) {
-
             var t = +new Date - this.lastUpdateTime,
                 result = t / 1000 * this.run.speed;
             switch (this.runingDirection) {
@@ -23,6 +22,13 @@
                     break;
             }
             super.draw(canvas);
+
+            if (Math.abs(this.point.x) + this.point.width > canvas.canvas.width
+                || Math.abs(this.point.y) + this.point.height > canvas.canvas.height) {
+                //超出边界，删除
+                this.isDel = true;
+                return;
+            }
         }
         runingDirection: direction;
         run = {

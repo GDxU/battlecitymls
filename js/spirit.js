@@ -4,6 +4,7 @@ var game;
         function spirit(imgKey, point) {
             this.rotate = 0;
             this.lastUpdateTime = +new Date;
+            this.isDel = false; //是否已被删除
             this.point = point;
             this.id = common.newId();
             this.imgKey = imgKey;

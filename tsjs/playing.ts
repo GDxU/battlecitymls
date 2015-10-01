@@ -115,7 +115,7 @@
         };
         //删除Spirit
         removeSpirit = (spirit: spirit) => {
-            this.spirits.filter(function (value) {
+            this.spirits = this.spirits.filter(function (value) {
                 if (value.id === spirit.id) {
                     return false;
                 }
@@ -136,7 +136,14 @@
             // #endregion
 
             this.canvas.clearRect(0, 0, this.width, this.height);
-            for (var i = 0, len = this.spirits.length; i < len; i++) {
+            for (var i = 0; i < this.spirits.length; i++) {
+                if (this.spirits[i].isDel) {
+                    //排除已经删除的
+                    this.removeSpirit(this.spirits[i]);
+                    i--;
+                    continue;
+                }
+
                 this.spirits[i].draw(this.canvas);
             }
         };
