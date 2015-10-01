@@ -13,6 +13,7 @@ module game {
         point: point;
         rotate = 0;
         lastUpdateTime = +new Date;
+        isDel = false; //是否已被删除
         private image: HTMLImageElement;
         set imgKey(key: string) {
             this.image = game.source.images[key].img;

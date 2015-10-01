@@ -122,7 +122,6 @@
                 return;
             }
             this.lastAttackTime = +new Date;
-            console.count();
             var x, y;
             //计算子弹发射位置
             switch (this.runingDirection) {
