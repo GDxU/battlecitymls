@@ -12,7 +12,7 @@ module game {
         id: string;
         point: point;
         rotate = 0;
-        lastUpdateTime = 0;
+        lastUpdateTime = +new Date;
         private image: HTMLImageElement;
         set imgKey(key: string) {
             this.image = game.source.images[key].img;

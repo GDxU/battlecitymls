@@ -6,17 +6,27 @@
         }
         draw(canvas: CanvasRenderingContext2D) {
 
-
+            var t = +new Date - this.lastUpdateTime,
+                result = t / 1000 * this.run.speed;
+            switch (this.runingDirection) {
+                case direction.D:
+                    this.point.y += result;
+                    break;
+                case direction.U:
+                    this.point.y -= result;
+                    break;
+                case direction.L:
+                    this.point.x -= result;
+                    break;
+                case direction.R:
+                    this.point.x += result;
+                    break;
+            }
             super.draw(canvas);
         }
         runingDirection: direction;
         run = {
-            speed: 0,  //每步走多少像素
-            sTime: 200,//每步需要多少时间
-            startPoint: 0,
-            endPoint: 0,
-            startRunTime: 0,
-            isRuning: false
+            speed: 200  //每秒走多少像素
         }
     }
 }

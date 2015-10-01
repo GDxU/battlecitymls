@@ -26,6 +26,10 @@ var game;
                 isRuning: false
             };
             this.runingDirection = direction.U;
+            //#endregion
+            //#region 攻击
+            this.attackIntervale = 500; //发射间隔
+            this.lastAttackTime = 0; //最后发射时间
             this.run.speed = this.point.width / 2;
         }
         tank.prototype.draw = function (canvas) {
@@ -101,9 +105,38 @@ var game;
             this.runingDirection = direc;
             this.run.isRuning = true;
         };
-        //#endregion
-        //#region 攻击
         tank.prototype.attack = function () {
+            if (+new Date() - this.lastAttackTime < this.attackIntervale) {
+                return;
+            }
+            this.lastAttackTime = +new Date;
+            console.count();
+            var x, y;
+            //计算子弹发射位置
+            switch (this.runingDirection) {
+                case direction.D:
+                    x = this.point.x + this.point.width / 2 - game.config.missileWH / 2;
+                    y = this.point.y + this.point.height;
+                    break;
+                case direction.U:
+                    x = this.point.x + this.point.width / 2 - game.config.missileWH / 2;
+                    y = this.point.y;
+                    break;
+                case direction.L:
+                    x = this.point.x;
+                    y = this.point.y + this.point.height / 2 - game.config.missileWH / 2;
+                    break;
+                case direction.R:
+                    x = this.point.x + this.point.width;
+                    y = this.point.y + this.point.height / 2 - game.config.missileWH / 2;
+                    break;
+            }
+            game.scene.addSpirit(new game.missile(this.runingDirection, {
+                height: game.config.missileWH,
+                width: game.config.missileWH,
+                x: x,
+                y: y
+            }));
         };
         return tank;
     })(game.spirit);

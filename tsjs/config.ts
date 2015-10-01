@@ -1,8 +1,11 @@
 ﻿module game {
     export var config = {
-        maxWidth: 600,
-        maxHeight: 600,
-        tankWidth: 30,
-        tankHeight: 30
+        tankWidth: 50,
+        tankHeight: 50,
+        missileWH: 10,
+        maxWidth: 0,
+        maxHeight: 0,
     };
+    game.config.maxWidth = config.tankWidth * 13;
+    game.config.maxHeight = config.tankHeight * 15;
 }
