@@ -64,6 +64,7 @@
             startRunTime: 0,
             isRuning: false
         }
+
         runingDirection = direction.U;
         moveL() {
             if (this.run.isRuning) {
@@ -114,9 +115,40 @@
         //#endregion
 
         //#region 攻击
-
+        attackIntervale = 500  //发射间隔
+        lastAttackTime = 0; //最后发射时间
         attack() {
-
+            if (+new Date() - this.lastAttackTime < this.attackIntervale) {
+                return;
+            }
+            this.lastAttackTime = +new Date;
+            console.count();
+            var x, y;
+            //计算子弹发射位置
+            switch (this.runingDirection) {
+                case direction.D:
+                    x = this.point.x + this.point.width / 2 - config.missileWH / 2;
+                    y = this.point.y + this.point.height;
+                    break;
+                case direction.U:
+                    x = this.point.x + this.point.width / 2 - config.missileWH / 2;
+                    y = this.point.y;
+                    break;
+                case direction.L:
+                    x = this.point.x;
+                    y = this.point.y + this.point.height / 2 - config.missileWH / 2;
+                    break;
+                case direction.R:
+                    x = this.point.x + this.point.width;
+                    y = this.point.y + this.point.height / 2 - config.missileWH / 2;
+                    break;
+            }
+            game.scene.addSpirit(new missile(this.runingDirection, {
+                height: config.missileWH,
+                width: config.missileWH,
+                x: x,
+                y: y
+            }));
         }
 
         //#endregion

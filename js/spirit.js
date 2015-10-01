@@ -3,7 +3,7 @@ var game;
     var spirit = (function () {
         function spirit(imgKey, point) {
             this.rotate = 0;
-            this.lastUpdateTime = 0;
+            this.lastUpdateTime = +new Date;
             this.point = point;
             this.id = common.newId();
             this.imgKey = imgKey;

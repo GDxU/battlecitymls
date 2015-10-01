@@ -6,7 +6,12 @@ var game;
         playEven[playEven["longPressR"] = 2] = "longPressR";
         playEven[playEven["longPressU"] = 3] = "longPressU";
         playEven[playEven["longPressD"] = 4] = "longPressD";
-        playEven[playEven["longPressAlphaA"] = 5] = "longPressAlphaA";
+        playEven[playEven["longPressKeypad0"] = 5] = "longPressKeypad0";
+        playEven[playEven["longPressAlphaA"] = 6] = "longPressAlphaA";
+        playEven[playEven["longPressAlphaW"] = 7] = "longPressAlphaW";
+        playEven[playEven["longPressAlphaS"] = 8] = "longPressAlphaS";
+        playEven[playEven["longPressAlphaD"] = 9] = "longPressAlphaD";
+        playEven[playEven["longPressAlphaJ"] = 10] = "longPressAlphaJ";
     })(game.playEven || (game.playEven = {}));
     var playEven = game.playEven;
     (function (ctrKey) {
@@ -14,7 +19,12 @@ var game;
         ctrKey[ctrKey["D"] = 40] = "D";
         ctrKey[ctrKey["U"] = 38] = "U";
         ctrKey[ctrKey["R"] = 39] = "R";
+        ctrKey[ctrKey["Keypad0"] = 96] = "Keypad0";
         ctrKey[ctrKey["AlphaA"] = 65] = "AlphaA";
+        ctrKey[ctrKey["AlphaW"] = 87] = "AlphaW";
+        ctrKey[ctrKey["AlphaS"] = 83] = "AlphaS";
+        ctrKey[ctrKey["AlphaD"] = 68] = "AlphaD";
+        ctrKey[ctrKey["AlphaJ"] = 74] = "AlphaJ";
     })(game.ctrKey || (game.ctrKey = {}));
     var ctrKey = game.ctrKey;
     //游戏场景
