@@ -36,8 +36,8 @@
         constructor(canvas: CanvasRenderingContext2D) {
             this.canvas = canvas;
             this.canvasElement = canvas.canvas;
-            this.width = this.canvasElement.width;
-            this.height = this.canvasElement.height;
+            this.width = this.width;
+            this.height = this.height;
 
             this.init();
         }
@@ -148,7 +148,23 @@
             }
         };
 
-
+        //测试一个spirit的是不是碰到边界
+        testOutBorder = (spirit) => {
+            var isInBorder = true;
+            if (spirit.x + spirit.width > this.width) {
+                isInBorder = false;
+            }
+            if (spirit.x < 0) {
+                isInBorder = false;
+            }
+            if (spirit.y + spirit.height > this.height) {
+                isInBorder = false;
+            }
+            if (spirit.y < 0) {
+                isInBorder = false;
+            }
+            return isInBorder;
+        }
 
     }
 }
