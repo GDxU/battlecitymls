@@ -124,10 +124,27 @@ var game;
                     _this.spirits[i].draw(_this.canvas);
                 }
             };
+            //测试一个spirit的是不是碰到边界
+            this.testOutBorder = function (spirit) {
+                var isInBorder = true;
+                if (spirit.x + spirit.width > _this.width) {
+                    isInBorder = false;
+                }
+                if (spirit.x < 0) {
+                    isInBorder = false;
+                }
+                if (spirit.y + spirit.height > _this.height) {
+                    isInBorder = false;
+                }
+                if (spirit.y < 0) {
+                    isInBorder = false;
+                }
+                return isInBorder;
+            };
             this.canvas = canvas;
             this.canvasElement = canvas.canvas;
-            this.width = this.canvasElement.width;
-            this.height = this.canvasElement.height;
+            this.width = this.width;
+            this.height = this.height;
             this.init();
         }
         return playing;
