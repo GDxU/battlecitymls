@@ -34,19 +34,19 @@ module game {
         scene.addSpirit(p1);
 
         scene.addEventListener(playEven.longPressAlphaA, function () {
-            p1.moveL();
+            p1.moveL(scene);
         });
         scene.addEventListener(playEven.longPressAlphaD, function () {
-            p1.moveR();
+            p1.moveR(scene);
         });
         scene.addEventListener(playEven.longPressAlphaW, function () {
-            p1.moveU();
+            p1.moveU(scene);
         });
         scene.addEventListener(playEven.longPressAlphaS, function () {
-            p1.moveD();
+            p1.moveD(scene);
         });
         scene.addEventListener(playEven.longPressAlphaJ, function () {
-            p1.attack();
+            p1.attack(scene);
         });
 
         var p2 = new game.tank("p2tank", {
@@ -58,19 +58,19 @@ module game {
         scene.addSpirit(p2);
 
         scene.addEventListener(playEven.longPressL, function () {
-            p2.moveL();
+            p2.moveL(scene);
         });
         scene.addEventListener(playEven.longPressR, function () {
-            p2.moveR();
+            p2.moveR(scene);
         });
         scene.addEventListener(playEven.longPressU, function () {
-            p2.moveU();
+            p2.moveU(scene);
         });
         scene.addEventListener(playEven.longPressD, function () {
-            p2.moveD();
+            p2.moveD(scene);
         });
         scene.addEventListener(playEven.longPressKeypad0, function () {
-            p2.attack();
+            p2.attack(scene);
         });
 
         console.log("start");
