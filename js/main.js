@@ -29,19 +29,19 @@ var game;
         });
         game.scene.addSpirit(p1);
         game.scene.addEventListener(game.playEven.longPressAlphaA, function () {
-            p1.moveL();
+            p1.moveL(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressAlphaD, function () {
-            p1.moveR();
+            p1.moveR(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressAlphaW, function () {
-            p1.moveU();
+            p1.moveU(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressAlphaS, function () {
-            p1.moveD();
+            p1.moveD(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressAlphaJ, function () {
-            p1.attack();
+            p1.attack(game.scene);
         });
         var p2 = new game.tank("p2tank", {
             x: game.config.tankWidth,
@@ -51,19 +51,19 @@ var game;
         });
         game.scene.addSpirit(p2);
         game.scene.addEventListener(game.playEven.longPressL, function () {
-            p2.moveL();
+            p2.moveL(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressR, function () {
-            p2.moveR();
+            p2.moveR(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressU, function () {
-            p2.moveU();
+            p2.moveU(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressD, function () {
-            p2.moveD();
+            p2.moveD(game.scene);
         });
         game.scene.addEventListener(game.playEven.longPressKeypad0, function () {
-            p2.attack();
+            p2.attack(game.scene);
         });
         console.log("start");
     };

@@ -66,7 +66,7 @@
         }
 
         runingDirection = direction.U;
-        moveL() {
+        moveL(sceneh: playing) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveL;
                 return;
@@ -75,7 +75,7 @@
             this.move(this.point.x, -this.run.speed, direction.L);
         }
 
-        moveR() {
+        moveR(sceneh: playing) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveR;
                 return;
@@ -84,7 +84,7 @@
             this.move(this.point.x, this.run.speed, direction.R);
         }
 
-        moveU() {
+        moveU(sceneh: playing) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveU;
                 return;
@@ -93,7 +93,7 @@
             this.move(this.point.y, -this.run.speed, direction.U);
         }
 
-        moveD() {
+        moveD(sceneh: playing) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveD;
                 return;
@@ -117,7 +117,7 @@
         //#region 攻击
         attackIntervale = 500  //发射间隔
         lastAttackTime = 0; //最后发射时间
-        attack() {
+        attack(sceneh: playing) {
             if (+new Date() - this.lastAttackTime < this.attackIntervale) {
                 return;
             }
@@ -142,7 +142,7 @@
                     y = this.point.y + this.point.height / 2 - config.missileWH / 2;
                     break;
             }
-            game.scene.addSpirit(new missile(this.runingDirection, {
+            scene.addSpirit(new missile(this.runingDirection, {
                 height: config.missileWH,
                 width: config.missileWH,
                 x: x,

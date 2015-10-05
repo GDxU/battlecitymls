@@ -66,7 +66,7 @@ var game;
             }
             _super.prototype.draw.call(this, canvas);
         };
-        tank.prototype.moveL = function () {
+        tank.prototype.moveL = function (sceneh) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveL;
                 return;
@@ -74,7 +74,7 @@ var game;
             this.rotate = 270;
             this.move(this.point.x, -this.run.speed, direction.L);
         };
-        tank.prototype.moveR = function () {
+        tank.prototype.moveR = function (sceneh) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveR;
                 return;
@@ -82,7 +82,7 @@ var game;
             this.rotate = 90;
             this.move(this.point.x, this.run.speed, direction.R);
         };
-        tank.prototype.moveU = function () {
+        tank.prototype.moveU = function (sceneh) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveU;
                 return;
@@ -90,7 +90,7 @@ var game;
             this.rotate = 0;
             this.move(this.point.y, -this.run.speed, direction.U);
         };
-        tank.prototype.moveD = function () {
+        tank.prototype.moveD = function (sceneh) {
             if (this.run.isRuning) {
                 this.nextMove = this.moveD;
                 return;
@@ -105,7 +105,7 @@ var game;
             this.runingDirection = direc;
             this.run.isRuning = true;
         };
-        tank.prototype.attack = function () {
+        tank.prototype.attack = function (sceneh) {
             if (+new Date() - this.lastAttackTime < this.attackIntervale) {
                 return;
             }
