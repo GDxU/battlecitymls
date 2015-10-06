@@ -20,4 +20,18 @@ var common;
         img.src = url;
     }
     common.convertImgToBase64 = convertImgToBase64;
+    //简单copy ,用于简单的对象, 会抛弃对象的constructor , 另外诸如RegExp对象是无法通过这种方式深复制的
+    function simpleClone(source) {
+        return JSON.parse(JSON.stringify(source));
+        ;
+    }
+    common.simpleClone = simpleClone;
+    function deepCopy(source) {
+        var result = {};
+        for (var key in source) {
+            result[key] = typeof source[key] === 'object' ? common.deepCopy(source[key]) : source[key];
+        }
+        return result;
+    }
+    common.deepCopy = deepCopy;
 })(common || (common = {}));

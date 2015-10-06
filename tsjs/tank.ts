@@ -66,7 +66,7 @@
         }
 
         runingDirection = direction.U;
-        moveL(sceneh: playing) {
+        moveL() {
             if (this.run.isRuning) {
                 this.nextMove = this.moveL;
                 return;
@@ -75,7 +75,7 @@
             this.move(this.point.x, -this.run.speed, direction.L);
         }
 
-        moveR(sceneh: playing) {
+        moveR() {
             if (this.run.isRuning) {
                 this.nextMove = this.moveR;
                 return;
@@ -84,7 +84,7 @@
             this.move(this.point.x, this.run.speed, direction.R);
         }
 
-        moveU(sceneh: playing) {
+        moveU() {
             if (this.run.isRuning) {
                 this.nextMove = this.moveU;
                 return;
@@ -93,7 +93,7 @@
             this.move(this.point.y, -this.run.speed, direction.U);
         }
 
-        moveD(sceneh: playing) {
+        moveD() {
             if (this.run.isRuning) {
                 this.nextMove = this.moveD;
                 return;
@@ -103,10 +103,26 @@
         }
         private nextMove;
         private move(start, speed, direc: direction) {
-            this.run.startRunTime = +new Date();
+           
+
             this.run.startPoint = start;
             this.run.endPoint = start + speed;
             this.runingDirection = direc;
+
+            var sourcePoint = common.simpleClone(this.point);
+
+            if (this.runingDirection === direction.R || this.runingDirection === direction.L) {
+                this.point.x = this.run.endPoint;
+            }
+            if (this.runingDirection === direction.U || this.runingDirection === direction.D) {
+                this.point.y = this.run.endPoint;
+            }
+            if (scene.testOutBorderAndOverlap(this)) {
+                this.point = sourcePoint;
+                return;
+            }
+
+            this.run.startRunTime = +new Date();
             this.run.isRuning = true;
 
 
@@ -117,7 +133,7 @@
         //#region 攻击
         attackIntervale = 500  //发射间隔
         lastAttackTime = 0; //最后发射时间
-        attack(sceneh: playing) {
+        attack() {
             if (+new Date() - this.lastAttackTime < this.attackIntervale) {
                 return;
             }
