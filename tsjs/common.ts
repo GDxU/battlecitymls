@@ -28,5 +28,15 @@ module common {
         };
         img.src = url;
     }
-
+    //简单copy ,用于简单的对象, 会抛弃对象的constructor , 另外诸如RegExp对象是无法通过这种方式深复制的
+    export function simpleClone(source){
+        return JSON.parse(JSON.stringify(source));;
+    }
+    export function deepCopy(source) {
+        var result = {};
+        for (var key in source) {
+            result[key] = typeof source[key] === 'object' ? common.deepCopy(source[key]) : source[key];
+        }
+        return result;
+    }
 }

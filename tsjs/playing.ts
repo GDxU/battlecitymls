@@ -36,8 +36,8 @@
         constructor(canvas: CanvasRenderingContext2D) {
             this.canvas = canvas;
             this.canvasElement = canvas.canvas;
-            this.width = this.width;
-            this.height = this.height;
+            this.width = this.canvas.canvas.width;
+            this.height = this.canvas.canvas.height;
 
             this.init();
         }
@@ -149,21 +149,63 @@
         };
 
         //测试一个spirit的是不是碰到边界
-        testOutBorder = (spirit) => {
-            var isInBorder = true;
-            if (spirit.x + spirit.width > this.width) {
-                isInBorder = false;
+        testOutBorder = (spirit: spirit) => {
+            if (spirit.point.x + spirit.point.width > this.width) {
+                return true;
             }
-            if (spirit.x < 0) {
-                isInBorder = false;
+            if (spirit.point.x < 0) {
+                return true;
             }
-            if (spirit.y + spirit.height > this.height) {
-                isInBorder = false;
+            if (spirit.point.y + spirit.point.height > this.height) {
+                return true;
             }
-            if (spirit.y < 0) {
-                isInBorder = false;
+            if (spirit.point.y < 0) {
+                return true;
             }
-            return isInBorder;
+            return false;
+        }
+        //测试是两个spirit是否重叠
+        testOverlap = (one: spirit, two: spirit): boolean => {
+            if (one === two)
+                return false;
+            var one_x1 = one.point.x,
+                one_x2 = one.point.x + one.point.width - 1,  // one.point.width -1 是因为坐标是从0开始的
+                one_y1 = one.point.y,
+                one_y2 = one.point.y + one.point.width - 1,
+
+                two_x1 = two.point.x,
+                two_x2 = two.point.x + two.point.width - 1,
+                two_y1 = two.point.y,
+                two_y2 = two.point.y + two.point.width - 1;
+
+            if ((two_x1 <= one_x1 && one_x1 <= two_x2) && (two_y1 <= one_y1 && one_y1 <= two_y2)) {
+                debugger
+                return true;
+            } else if ((two_x1 <= one_x2 && one_x2 <= two_x2) && (two_y1 <= one_y1 && one_y1 <= two_y2)) {
+                debugger
+                return true;
+            } else if ((two_x1 <= one_x1 && one_x1 <= two_x2) && (two_y1 <= one_y2 && one_y2 <= two_y2)) {
+                debugger
+                return true;
+            } else if ((two_x1 <= one_x2 && one_x2 <= two_x2) && (two_y1 <= one_y2 && one_y2 <= two_y2)) {
+                debugger
+                return true;
+            }
+
+        }
+
+        //测试是否会超出边界或碰撞
+        testOutBorderAndOverlap = (spirit): boolean => {
+            if (this.testOutBorder(spirit)) return true;
+            var one = spirit, two;
+            for (var t = 0, tlen = this.spirits.length; t < tlen; t++) {
+                two = this.spirits[t];
+                if (one !== two && this.testOverlap(one, two)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }

@@ -66,7 +66,7 @@ var game;
             }
             _super.prototype.draw.call(this, canvas);
         };
-        tank.prototype.moveL = function (sceneh) {
+        tank.prototype.moveL = function () {
             if (this.run.isRuning) {
                 this.nextMove = this.moveL;
                 return;
@@ -74,7 +74,7 @@ var game;
             this.rotate = 270;
             this.move(this.point.x, -this.run.speed, direction.L);
         };
-        tank.prototype.moveR = function (sceneh) {
+        tank.prototype.moveR = function () {
             if (this.run.isRuning) {
                 this.nextMove = this.moveR;
                 return;
@@ -82,7 +82,7 @@ var game;
             this.rotate = 90;
             this.move(this.point.x, this.run.speed, direction.R);
         };
-        tank.prototype.moveU = function (sceneh) {
+        tank.prototype.moveU = function () {
             if (this.run.isRuning) {
                 this.nextMove = this.moveU;
                 return;
@@ -90,7 +90,7 @@ var game;
             this.rotate = 0;
             this.move(this.point.y, -this.run.speed, direction.U);
         };
-        tank.prototype.moveD = function (sceneh) {
+        tank.prototype.moveD = function () {
             if (this.run.isRuning) {
                 this.nextMove = this.moveD;
                 return;
@@ -99,13 +99,24 @@ var game;
             this.move(this.point.y, this.run.speed, direction.D);
         };
         tank.prototype.move = function (start, speed, direc) {
-            this.run.startRunTime = +new Date();
             this.run.startPoint = start;
             this.run.endPoint = start + speed;
             this.runingDirection = direc;
+            var sourcePoint = common.simpleClone(this.point);
+            if (this.runingDirection === direction.R || this.runingDirection === direction.L) {
+                this.point.x = this.run.endPoint;
+            }
+            if (this.runingDirection === direction.U || this.runingDirection === direction.D) {
+                this.point.y = this.run.endPoint;
+            }
+            if (game.scene.testOutBorderAndOverlap(this)) {
+                this.point = sourcePoint;
+                return;
+            }
+            this.run.startRunTime = +new Date();
             this.run.isRuning = true;
         };
-        tank.prototype.attack = function (sceneh) {
+        tank.prototype.attack = function () {
             if (+new Date() - this.lastAttackTime < this.attackIntervale) {
                 return;
             }
