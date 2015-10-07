@@ -22,12 +22,10 @@
                     result,
                     isComplete = false;
                 if (t > this.run.sTime) {
-                    console.log(t, this.point)
                     result = this.run.endPoint;
 
                     isComplete = true;
                 } else {
-                    debugger
                     result = this.run.speed * t / this.run.sTime;
                     if (this.run.endPoint < this.run.startPoint) {
                         result = this.run.startPoint - result;
@@ -137,11 +135,9 @@
 
             if (this.runingDirection === direction.R || this.runingDirection === direction.L) {
                 this.point.x = this.run.endPoint;
-                console.log(this.point.x)
             }
             if (this.runingDirection === direction.U || this.runingDirection === direction.D) {
                 this.point.y = this.run.endPoint;
-                console.log(this.point.y)
             }
             if (scene.testOutBorderAndOverlap(this)) {
                 this.point = sourcePoint;

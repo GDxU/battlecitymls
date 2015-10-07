@@ -178,16 +178,12 @@
                 two_y2 = two.point.y + two.point.width - 1;
 
             if ((two_x1 <= one_x1 && one_x1 <= two_x2) && (two_y1 <= one_y1 && one_y1 <= two_y2)) {
-                debugger
                 return true;
             } else if ((two_x1 <= one_x2 && one_x2 <= two_x2) && (two_y1 <= one_y1 && one_y1 <= two_y2)) {
-                debugger
                 return true;
             } else if ((two_x1 <= one_x1 && one_x1 <= two_x2) && (two_y1 <= one_y2 && one_y2 <= two_y2)) {
-                debugger
                 return true;
             } else if ((two_x1 <= one_x2 && one_x2 <= two_x2) && (two_y1 <= one_y2 && one_y2 <= two_y2)) {
-                debugger
                 return true;
             }
 
