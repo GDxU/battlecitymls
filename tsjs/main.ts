@@ -112,18 +112,97 @@ module game {
             width: config.tankSize,
             height: config.tankSize
         }, { attackIntervale: 2000 }));
-
+        
+        //生成地形精灵
         (function () {
             var i, j, row, cell,
                 x, y,
                 w = config.tankSize,
-                h = w;
+                h = w,
+                addSpirit = function (cell, imgKey, isFloat: boolean) {
+                    var point, getPoint = function (n: config.terrainPortion) {
+                        if (n === config.terrainPortion.LU) {
+                            return {
+                                width: w / 2,
+                                height: h / 2,
+                                x: x,
+                                y: y
+                            };
+                        }
+                        if (n === config.terrainPortion.RU) {
+                            return {
+                                width: w / 2,
+                                height: h / 2,
+                                x: x + w / 2,
+                                y: y
+                            };
+                        }
+
+                        if (n === config.terrainPortion.LB) {
+                            return {
+                                width: w / 2,
+                                height: h / 2,
+                                x: x,
+                                y: y + w / 2
+                            };
+                        }
+                        if (n === config.terrainPortion.RB) {
+                            return {
+                                width: w / 2,
+                                height: h / 2,
+                                x: x + w / 2,
+                                y: y + w / 2
+                            };
+                        }
+                    };
+
+                    switch (cell.full) {
+                        case config.terrainFull.right:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
+                            break;
+                        case config.terrainFull.left:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                            break;
+                        case config.terrainFull.bottom:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                            break;
+                        case config.terrainFull.top:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
+                            break;
+                        case config.terrainFull.LB:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                            break;
+                        case config.terrainFull.RB:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
+                            break;
+                        case config.terrainFull.RU:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
+                            break;
+                        case config.terrainFull.LU:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
+                            break;
+                        case config.terrainFull.full:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                            break;
+                    }
+
+
+                };
             for (i = 0; i < config.map.length; i++) {
                 row = config.map[i];
                 for (j = 0; j < row.length; j++) {
                     x = j * config.tankSize;
                     y = i * config.tankSize;
-                    cell = row[j]
+                    cell = row[j];
+
+
                     switch (cell.type) {
                         case config.terrain.symbol:
                             scene.addSpirit(new game.terrain("symbol", {
@@ -131,75 +210,29 @@ module game {
                                 height: h,
                                 x: x,
                                 y: y
-                            }));
+                            }, false));
+                            break;
+                        case config.terrain.grass:
+                            scene.addSpirit(new game.terrain("grass", {
+                                width: w,
+                                height: h,
+                                x: x,
+                                y: y
+                            }, true));
+                            break;
+                        case config.terrain.water:
+                            scene.addSpirit(new game.terrain("water", {
+                                width: w,
+                                height: h,
+                                x: x,
+                                y: y
+                            }, false));
                             break;
                         case config.terrain.wall:
-                            console.log(cell.full, config.terrainFull.right, config.terrainFull.full)
-                            if (cell.full === config.terrainFull.right) {
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x + w / 2,
-                                    y: y
-                                }));
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x + w / 2,
-                                    y: y + w / 2
-                                }));
-                            }
-                            if (cell.full === config.terrainFull.left) {
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x,
-                                    y: y + w / 2
-                                }));
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x,
-                                    y: y
-                                }));
-                            }
-                            if (cell.full === config.terrainFull.bottom) {
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x,
-                                    y: y + w / 2
-                                }));
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x + w / 2,
-                                    y: y + w / 2
-                                }));
-                            }
-                            if (cell.full === config.terrainFull.top) {
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x,
-                                    y: y
-                                }));
-                                scene.addSpirit(new game.terrain("wall", {
-                                    width: w / 2,
-                                    height: h / 2,
-                                    x: x + w / 2,
-                                    y: y
-                                }));
-                            }
-
-                            if (cell.full === config.terrainFull.full) {
-                                scene.addSpirit(new game.terrain("walls", {
-                                    width: w,
-                                    height: h,
-                                    x: x,
-                                    y: y
-                                }));
-                            }
+                            addSpirit(cell, "wall", false);
+                            break;
+                        case config.terrain.steel:
+                            addSpirit(cell, "steel", false);
                             break;
                     }
 
@@ -207,6 +240,8 @@ module game {
             }
 
         })();
+        //end生成地形精灵
+
     };
 }
 window.addEventListener("load", function () {

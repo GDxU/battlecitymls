@@ -5,6 +5,7 @@ var game;
             this.rotate = 0;
             this.lastUpdateTime = +new Date;
             this.isDel = false; //是否已被删除
+            this.isFloat = false; //漂浮精灵 true则不会与其他精灵发生碰撞
             this.point = point;
             this.id = common.newId();
             this.imgKey = imgKey;
