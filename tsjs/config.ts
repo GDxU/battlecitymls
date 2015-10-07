@@ -1,16 +1,59 @@
-﻿module game {
-    export var config = {
-        tankWidth: 50,
-        tankHeight: 50,
-        missileWH: 10,
-        maxWidth: 0,
-        maxHeight: 0,
-    };
-    game.config.maxWidth = config.tankWidth * 13;
-    game.config.maxHeight = config.tankHeight * 15;
+﻿module game.config {
+    export var
+        tankSize = 50,
+        missileWH = 10,
+        gameCellWidth = 13, //列
+        gameCellHeight = 15, //行
+        maxWidth = 0,
+        maxHeight = 0;
+
+    game.config.maxWidth = config.tankSize * config.gameCellWidth;
+    game.config.maxHeight = config.tankSize * config.gameCellHeight;
 
     export enum troops {
         sentinel,
         scourge
     }
+    export enum terrain { //地形
+        empty,
+        wall,  //土墙
+        steel, //钢铁
+        water, //水
+        grass, //草地
+        symbol //玩家基地
+    }
+    export enum terrainFull { //地形完整程度
+        full, //完整
+        left, //只有左
+        top,
+        right,
+        bottom
+    }
+    export var map = []; //地图配置
+    //地形初始化
+    var i, j, row;
+    for (i = 0; i < config.gameCellHeight; i++) {
+        row = [];
+        for (j = 0; j < config.gameCellWidth; j++) {
+            row.push({
+                type: terrain.empty,
+                full: terrainFull.full
+            });
+        }
+        map.push(row);
+    }
+    map[config.gameCellHeight - 1][6].type = terrain.symbol; //基地
+
+    //基地
+    map[config.gameCellHeight - 1][5].type = terrain.wall;
+    map[config.gameCellHeight - 1][5].full = terrainFull.right;
+    map[config.gameCellHeight - 1][7].type = terrain.wall;
+    map[config.gameCellHeight - 1][7].full = terrainFull.left;
+
+    map[config.gameCellHeight - 2][6].type = terrain.wall;
+    map[config.gameCellHeight - 2][6].full = terrainFull.bottom;
+    //end地形初始化
+
+
+
 }

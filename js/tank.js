@@ -66,7 +66,7 @@ var game;
                     }
                 }
             }
-            if (this.troops === game.troops.scourge) {
+            if (this.troops === game.config.troops.scourge) {
                 //天灾军团... 电脑玩家
                 //保持直线前进，发生碰撞时转弯
                 if (this.runingDirection === direction.R) {
@@ -131,7 +131,7 @@ var game;
             }
             if (game.scene.testOutBorderAndOverlap(this)) {
                 this.point = sourcePoint;
-                if (this.troops === game.troops.scourge) {
+                if (this.troops === game.config.troops.scourge) {
                     //天灾军团... 电脑玩家
                     this.runingDirection = [direction.U, direction.D, direction.R, direction.L][common.getRandomNum(1, 4) - 1];
                 }
