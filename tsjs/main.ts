@@ -18,6 +18,10 @@ module game {
     var loadImgs = function () {
         game.load.image("p1tank", "img/p1tank.gif");
         game.load.image("p2tank", "img/p2tank.gif");
+        game.load.image("enemy1", "img/enemy1.gif");
+        game.load.image("enemy2", "img/enemy2.gif");
+        game.load.image("enemy3", "img/enemy3.gif");
+
         game.load.image("bomb", "img/bomb.gif");
         game.load.image("tankmissile", "img/tankmissile.gif");
     }
@@ -25,9 +29,9 @@ module game {
         //开始游戏
 
         scene = new game.playing(canvas.getContext("2d"));
-        var p1 = new game.tank("p1tank", {
-            x: 0,
-            y: 0,
+        var p1 = new game.tank("p1tank", troops.sentinel, {
+            x: config.tankWidth * 4,
+            y: canvas.height - config.tankHeight,
             width: config.tankWidth,
             height: config.tankHeight
         });
@@ -49,9 +53,9 @@ module game {
             p1.attack();
         });
 
-        var p2 = new game.tank("p2tank", {
-            x: config.tankWidth,
-            y: 0,
+        var p2 = new game.tank("p2tank", troops.sentinel, {
+            x: config.tankWidth * 8,
+            y: canvas.height - config.tankHeight,
             width: config.tankWidth,
             height: config.tankHeight
         });
@@ -74,6 +78,29 @@ module game {
         });
 
         console.log("start");
+
+
+        var aa = new game.tank("enemy1", troops.scourge, {
+            x: 0,
+            y: 0,
+            width: config.tankWidth,
+            height: config.tankHeight
+        });
+        aa.run.sTime = 1000;
+        aa.runingDirection = direction.D;
+        scene.addSpirit(aa);
+        scene.addSpirit(new game.tank("enemy2", troops.scourge, {
+            x: config.tankWidth * 1,
+            y: 0,
+            width: config.tankWidth,
+            height: config.tankHeight
+        }, { attackIntervale: 2000 }));
+        scene.addSpirit(new game.tank("enemy3", troops.scourge, {
+            x: config.tankWidth * 2,
+            y: 0,
+            width: config.tankWidth,
+            height: config.tankHeight
+        }, { attackIntervale: 2000 }));
     };
 }
 window.addEventListener("load", function () {

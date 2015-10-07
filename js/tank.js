@@ -14,7 +14,7 @@ var game;
     var direction = game.direction;
     var tank = (function (_super) {
         __extends(tank, _super);
-        function tank(imgKey, point) {
+        function tank(imgKey, troops, point, opt) {
             _super.call(this, imgKey, point);
             //#region 移动
             this.run = {
@@ -30,17 +30,21 @@ var game;
             //#region 攻击
             this.attackIntervale = 500; //发射间隔
             this.lastAttackTime = 0; //最后发射时间
+            opt && common.extend(this, opt);
             this.run.speed = this.point.width / 2;
+            this.troops = troops;
         }
         tank.prototype.draw = function (canvas) {
             if (this.run.isRuning) {
-                var t = +new Date - this.run.startRunTime, //花的时间
+                var t = +new Date() - this.run.startRunTime, //花的时间
                 result, isComplete = false;
                 if (t > this.run.sTime) {
+                    console.log(t, this.point);
                     result = this.run.endPoint;
                     isComplete = true;
                 }
                 else {
+                    debugger;
                     result = this.run.speed * t / this.run.sTime;
                     if (this.run.endPoint < this.run.startPoint) {
                         result = this.run.startPoint - result;
@@ -63,6 +67,24 @@ var game;
                         this.nextMove = null;
                     }
                 }
+            }
+            if (this.troops === game.troops.scourge) {
+                //天灾军团... 电脑玩家
+                //保持直线前进，发生碰撞时转弯
+                if (this.runingDirection === direction.R) {
+                    this.moveR();
+                }
+                if (this.runingDirection === direction.L) {
+                    this.moveL();
+                }
+                if (this.runingDirection === direction.U) {
+                    this.moveU();
+                }
+                if (this.runingDirection === direction.D) {
+                    this.moveD();
+                }
+                //发射子弹
+                this.attack();
             }
             _super.prototype.draw.call(this, canvas);
         };
@@ -105,14 +127,21 @@ var game;
             var sourcePoint = common.simpleClone(this.point);
             if (this.runingDirection === direction.R || this.runingDirection === direction.L) {
                 this.point.x = this.run.endPoint;
+                console.log(this.point.x);
             }
             if (this.runingDirection === direction.U || this.runingDirection === direction.D) {
                 this.point.y = this.run.endPoint;
+                console.log(this.point.y);
             }
             if (game.scene.testOutBorderAndOverlap(this)) {
                 this.point = sourcePoint;
+                if (this.troops === game.troops.scourge) {
+                    //天灾军团... 电脑玩家
+                    this.runingDirection = [direction.U, direction.D, direction.R, direction.L][common.getRandomNum(1, 4) - 1];
+                }
                 return;
             }
+            this.point = sourcePoint;
             this.run.startRunTime = +new Date();
             this.run.isRuning = true;
         };

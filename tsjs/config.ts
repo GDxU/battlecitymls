@@ -8,4 +8,9 @@
     };
     game.config.maxWidth = config.tankWidth * 13;
     game.config.maxHeight = config.tankHeight * 15;
+
+    export enum troops {
+        sentinel,
+        scourge
+    }
 }
