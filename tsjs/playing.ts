@@ -38,7 +38,6 @@
             this.canvasElement = canvas.canvas;
             this.width = this.canvas.canvas.width;
             this.height = this.canvas.canvas.height;
-
             this.init();
         }
         init = () => {
@@ -207,6 +206,7 @@
 
             return false;
         }
+
 
     }
 }

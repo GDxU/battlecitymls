@@ -34,4 +34,20 @@ var common;
         return result;
     }
     common.deepCopy = deepCopy;
+    function getRandomNum(min, max) {
+        var Range = max - min;
+        var Rand = Math.random();
+        return (min + Math.round(Rand * Range));
+    }
+    common.getRandomNum = getRandomNum;
+    function extend(target, source) {
+        for (var p in source) {
+            if (source.hasOwnProperty(p)) {
+                target[p] = source[p];
+            }
+        }
+        return target;
+    }
+    common.extend = extend;
+    ;
 })(common || (common = {}));
