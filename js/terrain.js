@@ -7,8 +7,9 @@ var game;
 (function (game) {
     var terrain = (function (_super) {
         __extends(terrain, _super);
-        function terrain() {
-            _super.apply(this, arguments);
+        function terrain(imgKey, point, isFloat) {
+            _super.call(this, imgKey, point);
+            this.isFloat = isFloat;
         }
         terrain.prototype.draw = function (canvas) {
             _super.prototype.draw.call(this, canvas);

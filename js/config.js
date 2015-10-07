@@ -25,8 +25,19 @@ var game;
             terrainFull[terrainFull["top"] = 2] = "top";
             terrainFull[terrainFull["right"] = 3] = "right";
             terrainFull[terrainFull["bottom"] = 4] = "bottom";
+            terrainFull[terrainFull["LU"] = 5] = "LU";
+            terrainFull[terrainFull["RU"] = 6] = "RU";
+            terrainFull[terrainFull["LB"] = 7] = "LB";
+            terrainFull[terrainFull["RB"] = 8] = "RB";
         })(config.terrainFull || (config.terrainFull = {}));
         var terrainFull = config.terrainFull;
+        (function (terrainPortion) {
+            terrainPortion[terrainPortion["LU"] = 0] = "LU";
+            terrainPortion[terrainPortion["RU"] = 1] = "RU";
+            terrainPortion[terrainPortion["LB"] = 2] = "LB";
+            terrainPortion[terrainPortion["RB"] = 3] = "RB"; //右下
+        })(config.terrainPortion || (config.terrainPortion = {}));
+        var terrainPortion = config.terrainPortion;
         config.map = []; //地图配置
         //地形初始化
         var i, j, row;
@@ -40,13 +51,27 @@ var game;
             }
             config.map.push(row);
         }
-        config.map[config.gameCellHeight - 1][6].type = terrain.symbol; //基地
         //基地
-        config.map[config.gameCellHeight - 1][5].type = terrain.wall;
-        config.map[config.gameCellHeight - 1][5].full = terrainFull.right;
-        config.map[config.gameCellHeight - 1][7].type = terrain.wall;
-        config.map[config.gameCellHeight - 1][7].full = terrainFull.left;
-        config.map[config.gameCellHeight - 2][6].type = terrain.wall;
-        config.map[config.gameCellHeight - 2][6].full = terrainFull.bottom;
+        config.map[config.gameCellHeight - 1][6].type = terrain.symbol;
+        config.map[config.gameCellHeight - 1][5] = {
+            type: terrain.wall,
+            full: terrainFull.right
+        };
+        config.map[config.gameCellHeight - 1][7] = {
+            type: terrain.wall,
+            full: terrainFull.left
+        };
+        config.map[config.gameCellHeight - 2][6] = {
+            type: terrain.wall,
+            full: terrainFull.bottom
+        };
+        config.map[config.gameCellHeight - 2][5] = {
+            type: terrain.wall,
+            full: terrainFull.RB
+        };
+        config.map[config.gameCellHeight - 2][7] = {
+            type: terrain.wall,
+            full: terrainFull.LB
+        };
     })(config = game.config || (game.config = {}));
 })(game || (game = {}));

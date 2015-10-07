@@ -14,6 +14,7 @@ module game {
         rotate = 0;
         lastUpdateTime = +new Date;
         isDel = false; //是否已被删除
+        isFloat = false;  //漂浮精灵 true则不会与其他精灵发生碰撞
         private image: HTMLImageElement;
         set imgKey(key: string) {
             this.image = game.source.images[key].img;

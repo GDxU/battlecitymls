@@ -27,7 +27,17 @@
         left, //只有左
         top,
         right,
-        bottom
+        bottom,
+        LU,
+        RU,
+        LB,
+        RB 
+    }
+    export enum terrainPortion {
+        LU, //左上
+        RU, //右上
+        LB, //左下
+        RB  //右下
     }
     export var map = []; //地图配置
     //地形初始化
@@ -42,16 +52,33 @@
         }
         map.push(row);
     }
-    map[config.gameCellHeight - 1][6].type = terrain.symbol; //基地
+
 
     //基地
-    map[config.gameCellHeight - 1][5].type = terrain.wall;
-    map[config.gameCellHeight - 1][5].full = terrainFull.right;
-    map[config.gameCellHeight - 1][7].type = terrain.wall;
-    map[config.gameCellHeight - 1][7].full = terrainFull.left;
+    map[config.gameCellHeight - 1][6].type = terrain.symbol;
 
-    map[config.gameCellHeight - 2][6].type = terrain.wall;
-    map[config.gameCellHeight - 2][6].full = terrainFull.bottom;
+    map[config.gameCellHeight - 1][5] = {
+        type: terrain.wall,
+        full: terrainFull.right
+    }
+    map[config.gameCellHeight - 1][7] = {
+        type: terrain.wall,
+        full: terrainFull.left
+    }
+
+    map[config.gameCellHeight - 2][6] = {
+        type: terrain.wall,
+        full: terrainFull.bottom
+    }
+
+    map[config.gameCellHeight - 2][5] = {
+        type: terrain.wall,
+        full: terrainFull.RB
+    }
+    map[config.gameCellHeight - 2][7] = {
+        type: terrain.wall,
+        full: terrainFull.LB
+    }
     //end地形初始化
 
 
