@@ -7,11 +7,12 @@ var game;
 (function (game) {
     var missile = (function (_super) {
         __extends(missile, _super);
-        function missile(direc, point) {
+        function missile(direc, point, opt) {
             _super.call(this, "tankmissile", point);
             this.run = {
                 speed: 200 //每秒走多少像素
             };
+            opt && common.extend(this, opt);
             this.runingDirection = direc;
         }
         missile.prototype.draw = function (canvas) {

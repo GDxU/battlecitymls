@@ -1,9 +1,12 @@
 ﻿module game {
     export class missile extends spirit {
-        constructor(direc: direction, point?: point) {
+        constructor(direc: direction, point: point, opt?) {
             super("tankmissile", point);
+            opt && common.extend(this, opt);
             this.runingDirection = direc;
         }
+        troops: config.troops
+        tankId: string;
         draw(canvas: CanvasRenderingContext2D) {
             var t = +new Date - this.lastUpdateTime,
                 result = t / 1000 * this.run.speed;

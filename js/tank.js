@@ -15,6 +15,7 @@ var game;
     var tank = (function (_super) {
         __extends(tank, _super);
         function tank(imgKey, troops, point, opt) {
+            var _this = this;
             _super.call(this, imgKey, point);
             //#region 移动
             this.run = {
@@ -26,6 +27,23 @@ var game;
                 isRuning: false
             };
             this.runingDirection = direction.U;
+            //测试是否会超出边界或碰撞
+            this.testOutBorderAndOverlap = function (spirit) {
+                if (game.scene.testOutBorder(spirit))
+                    return true;
+                var one = spirit, two;
+                for (var t = 0, tlen = game.scene.spirits.length; t < tlen; t++) {
+                    two = game.scene.spirits[t];
+                    if (two.constructor === game.missile && two.troops === _this.troops) {
+                        //自己队伍的子弹可以穿过自己
+                        continue;
+                    }
+                    if (one !== two && game.scene.testOverlap(one, two)) {
+                        return true;
+                    }
+                }
+                return false;
+            };
             //#endregion
             //#region 攻击
             this.attackIntervale = 500; //发射间隔
@@ -129,7 +147,7 @@ var game;
             if (this.runingDirection === direction.U || this.runingDirection === direction.D) {
                 this.point.y = this.run.endPoint;
             }
-            if (game.scene.testOutBorderAndOverlap(this)) {
+            if (this.testOutBorderAndOverlap(this)) {
                 this.point = sourcePoint;
                 if (this.troops === game.config.troops.scourge) {
                     //天灾军团... 电脑玩家
@@ -171,6 +189,9 @@ var game;
                 width: game.config.missileWH,
                 x: x,
                 y: y
+            }, {
+                troops: this.troops,
+                tankId: this.id
             }));
         };
         return tank;

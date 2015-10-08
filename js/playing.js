@@ -144,30 +144,6 @@ var game;
             this.testOverlap = function (one, two) {
                 if (one === two || two.isFloat || one.isFloat)
                     return false;
-                //var one_x1 = one.point.x,
-                //    one_x2 = one.point.x + one.point.width - 1,  // one.point.width -1 是因为坐标是从0开始的
-                //    one_y1 = one.point.y + one.point.height,
-                //    one_y2 = one.point.y + one.point.height + one.point.width - 1,
-                //    two_x1 = two.point.x,
-                //    two_x2 = two.point.x + two.point.width - 1,
-                //    two_y1 = two.point.y + two.point.height,
-                //    two_y2 = two.point.y + two.point.height + two.point.width - 1;
-                //if ((one_x1 <= two_x1 && two_x1 <= one_x2) && (one_x1 <= two_x1 && two_x1 <= one_y1)) {
-                //    // two 1 one 内
-                //    return true;
-                //}
-                //if ((one_x1 <= two_x2 && two_x2 <= one_x2) && (one_x1 <= two_x2 && two_x2 <= one_y1)) {
-                //    // two 第2个点在 one 内
-                //    return true;
-                //}
-                //if ((one_x1 <= two_y1 && two_y1 <= one_x2) && (one_x1 <= two_y1 && two_y1 <= one_y1)) {
-                //    // two 3 one 内
-                //    return true;
-                //}
-                //if ((one_x1 <= two_y2 && two_y2 <= one_x2) && (one_x1 <= two_y2 && two_y2 <= one_y1)) {
-                //    // two 4 one 内
-                //    return true;
-                //}
                 var one_x1 = one.point.x, one_x2 = one.point.x + one.point.width - 1, // one.point.width -1 是因为坐标是从0开始的
                 one_y1 = one.point.y, one_y2 = one.point.y + one.point.width - 1, two_x1 = two.point.x, two_x2 = two.point.x + two.point.width - 1, two_y1 = two.point.y, two_y2 = two.point.y + two.point.width - 1;
                 if ((two_x1 <= one_x1 && one_x1 <= two_x2) && (two_y1 <= one_y1 && one_y1 <= two_y2)) {
@@ -194,19 +170,6 @@ var game;
                 else if ((one_x1 <= two_x2 && two_x2 <= one_x2) && (one_y1 <= two_y2 && two_y2 <= one_y2)) {
                     return true;
                 }
-            };
-            //测试是否会超出边界或碰撞
-            this.testOutBorderAndOverlap = function (spirit) {
-                if (_this.testOutBorder(spirit))
-                    return true;
-                var one = spirit, two;
-                for (var t = 0, tlen = _this.spirits.length; t < tlen; t++) {
-                    two = _this.spirits[t];
-                    if (one !== two && _this.testOverlap(one, two)) {
-                        return true;
-                    }
-                }
-                return false;
             };
             this.canvas = canvas;
             this.canvasElement = canvas.canvas;
