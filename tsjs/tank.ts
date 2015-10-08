@@ -139,7 +139,7 @@
             if (this.runingDirection === direction.U || this.runingDirection === direction.D) {
                 this.point.y = this.run.endPoint;
             }
-            if (scene.testOutBorderAndOverlap(this)) {
+            if (this.testOutBorderAndOverlap(this)) {
                 this.point = sourcePoint;
                 if (this.troops === config.troops.scourge) {
                     //天灾军团... 电脑玩家
@@ -153,6 +153,23 @@
             this.run.startRunTime = +new Date();
             this.run.isRuning = true;
 
+        }
+        //测试是否会超出边界或碰撞
+        testOutBorderAndOverlap = (spirit): boolean => {
+            if (scene.testOutBorder(spirit)) return true;
+            var one = spirit, two;
+            for (var t = 0, tlen = scene.spirits.length; t < tlen; t++) {
+                two = scene.spirits[t];
+                if (two.constructor === game.missile && two.troops === this.troops) {
+                    //自己队伍的子弹可以穿过自己
+                    continue;
+                }
+                if (one !== two && scene.testOverlap(one, two)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         //#endregion
@@ -190,7 +207,10 @@
                 width: config.missileWH,
                 x: x,
                 y: y
-            }));
+            }, {
+                    troops: this.troops,
+                    tankId: this.id
+                }));
         }
 
         //#endregion
