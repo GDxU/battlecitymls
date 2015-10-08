@@ -69,9 +69,27 @@ var game;
             type: terrain.wall,
             full: terrainFull.RB
         };
+        config.map[config.gameCellHeight - 2][5] = {
+            type: terrain.wall,
+            full: terrainFull.RB
+        };
         config.map[config.gameCellHeight - 2][7] = {
             type: terrain.wall,
             full: terrainFull.LB
+        };
+        config.map[2][5] = {
+            type: terrain.steel,
+            full: terrainFull.full
+        };
+        config.map[2][6] = {
+            type: terrain.grass
+        };
+        config.map[2][8] = {
+            type: terrain.water
+        };
+        config.map[2][2] = {
+            type: terrain.wall,
+            full: terrainFull.full
         };
     })(config = game.config || (game.config = {}));
 })(game || (game = {}));
