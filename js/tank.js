@@ -17,6 +17,7 @@ var game;
         function tank(imgKey, troops, point, opt) {
             var _this = this;
             _super.call(this, imgKey, point);
+            this.ATK = 1; //攻击力
             //#region 移动
             this.run = {
                 speed: 0,
@@ -191,7 +192,8 @@ var game;
                 y: y
             }, {
                 troops: this.troops,
-                tankId: this.id
+                tankId: this.id,
+                ATK: this.ATK
             }));
         };
         return tank;

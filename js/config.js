@@ -87,9 +87,90 @@ var game;
         config.map[2][8] = {
             type: terrain.water
         };
-        config.map[2][2] = {
+        config.map[1][1] = {
             type: terrain.wall,
             full: terrainFull.full
         };
+        config.map[2][1] = {
+            type: terrain.wall,
+            full: terrainFull.full
+        };
+        config.map[3][1] = {
+            type: terrain.wall,
+            full: terrainFull.full
+        };
+        config.map[4][1] = {
+            type: terrain.wall,
+            full: terrainFull.full
+        };
+        config.map[5][1] = {
+            type: terrain.wall,
+            full: terrainFull.top
+        };
+        config.map[6][0] = {
+            type: terrain.steel,
+            full: terrainFull.bottom
+        };
+        config.map[12][0] = { type: terrain.steel, full: terrainFull.bottom };
+        config.map[1][3] = {
+            type: terrain.wall,
+            full: terrainFull.full
+        };
+        config.map[2][3] = {
+            type: terrain.wall,
+            full: terrainFull.full
+        };
+        config.map[3][3] = {
+            type: terrain.wall,
+            full: terrainFull.full
+        };
+        config.map[4][3] = {
+            type: terrain.wall,
+            full: terrainFull.full
+        };
+        config.map[5][3] = {
+            type: terrain.wall,
+            full: terrainFull.top
+        };
+        config.map[3][6] = {
+            type: terrain.steel,
+            full: terrainFull.top
+        };
+        //end地形初始化
+        config.map[1][12] = { type: terrain.grass };
+        config.map[2][12] = { type: terrain.grass };
+        config.map[3][12] = { type: terrain.grass };
+        config.map[4][12] = { type: terrain.grass };
+        config.map[5][12] = { type: terrain.grass };
+        config.map[6][12] = { type: terrain.grass };
+        config.map[7][12] = { type: terrain.grass };
+        config.map[8][12] = { type: terrain.grass };
+        config.map[9][12] = { type: terrain.grass };
+        config.map[14][11] = { type: terrain.steel, full: terrainFull.top };
+        config.map[9][5] = { type: terrain.steel, full: terrainFull.top };
+        config.map[9][6] = { type: terrain.steel, full: terrainFull.top };
+        config.map[9][7] = { type: terrain.steel, full: terrainFull.top };
+        config.map[10] = [{ type: terrain.steel, full: terrainFull.top }, { type: terrain.grass }, { type: terrain.empty }, { type: terrain.empty }, { type: terrain.water }, { type: terrain.water }, { type: terrain.water }, { type: terrain.water }, { type: terrain.wall }, { type: terrain.steel }, { type: terrain.steel }, { type: terrain.wall }, { type: terrain.grass }];
+        config.map[11][1] = { type: terrain.wall };
+        config.map[11][2] = { type: terrain.wall };
+        config.map[12][3] = { type: terrain.wall, full: terrainFull.top };
+        config.map[12][4] = { type: terrain.wall, full: terrainFull.right };
+        config.map[11][12] = { type: terrain.wall };
+        config.map[12][12] = { type: terrain.grass };
+        config.map[13][12] = { type: terrain.wall };
+        config.map[12][8] = { type: terrain.grass };
+        config.map[12][9] = { type: terrain.grass };
+        config.map[13][10] = { type: terrain.grass };
+        config.map[13][11] = { type: terrain.grass };
+        config.map[14][9] = { type: terrain.wall, full: terrainFull.right };
+        config.map[14][11] = { type: terrain.grass };
+        config.map[14][12] = { type: terrain.steel, full: terrainFull.top };
+        config.map[14][12] = { type: terrain.steel, full: terrainFull.bottom };
+        config.map[8][9] = { type: terrain.steel, full: terrainFull.top };
+        config.map[8][10] = { type: terrain.wall, full: terrainFull.top };
+        config.map[8][11] = { type: terrain.wall, full: terrainFull.top };
+        config.map[7][11] = { type: terrain.wall };
+        config.map[6][11] = { type: terrain.wall };
+        config.map[5][11] = { type: terrain.wall };
     })(config = game.config || (game.config = {}));
 })(game || (game = {}));

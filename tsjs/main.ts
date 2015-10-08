@@ -46,6 +46,7 @@ module game {
             width: config.tankSize,
             height: config.tankSize
         });
+        p1.ATK = 3;
         scene.addSpirit(p1);
 
         scene.addEventListener(playEven.longPressAlphaA, function () {
@@ -112,14 +113,44 @@ module game {
             width: config.tankSize,
             height: config.tankSize
         }, { attackIntervale: 2000 }));
-        
+        scene.addSpirit(new game.tank("enemy3", config.troops.scourge, {
+            x: config.tankSize * 3,
+            y: 0,
+            width: config.tankSize,
+            height: config.tankSize
+        }, { attackIntervale: 2000 }));
+        scene.addSpirit(new game.tank("enemy3", config.troops.scourge, {
+            x: config.tankSize * 4,
+            y: 0,
+            width: config.tankSize,
+            height: config.tankSize
+        }, { attackIntervale: 2000 }));
+        scene.addSpirit(new game.tank("enemy3", config.troops.scourge, {
+            x: config.tankSize * 5,
+            y: 0,
+            width: config.tankSize,
+            height: config.tankSize
+        }, { attackIntervale: 2000 }));
+        scene.addSpirit(new game.tank("enemy2", config.troops.scourge, {
+            x: config.tankSize * 6,
+            y: 0,
+            width: config.tankSize,
+            height: config.tankSize
+        }, { attackIntervale: 2000 }));
+        scene.addSpirit(new game.tank("enemy1", config.troops.scourge, {
+            x: config.tankSize * 7,
+            y: 0,
+            width: config.tankSize,
+            height: config.tankSize
+        }, { attackIntervale: 2000 }));
+
         //生成地形精灵
         (function () {
-            var i, j, row, cell,
+            var i, j, row, cell, newSpirit,
                 x, y,
                 w = config.tankSize,
                 h = w,
-                addSpirit = function (cell, imgKey, isFloat: boolean) {
+                addSpirit = function (cell, imgKey, opt?) {
                     var point, getPoint = function (n: config.terrainPortion) {
                         if (n === config.terrainPortion.LU) {
                             return {
@@ -158,38 +189,38 @@ module game {
 
                     switch (cell.full) {
                         case config.terrainFull.right:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), opt));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), opt));
                             break;
                         case config.terrainFull.left:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), opt));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), opt));
                             break;
                         case config.terrainFull.bottom:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), opt));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), opt));
                             break;
                         case config.terrainFull.top:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), opt));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), opt));
                             break;
                         case config.terrainFull.LB:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), opt));
                             break;
                         case config.terrainFull.RB:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), opt));
                             break;
                         case config.terrainFull.RU:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), opt));
                             break;
                         case config.terrainFull.LU:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), opt));
                             break;
-                        case config.terrainFull.full:
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), isFloat));
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), isFloat));
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), isFloat));
-                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), isFloat));
+                        default:
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RU), opt));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LU), opt));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.RB), opt));
+                            scene.addSpirit(new terrain(imgKey, getPoint(config.terrainPortion.LB), opt));
                             break;
                     }
 
@@ -210,7 +241,7 @@ module game {
                                 height: h,
                                 x: x,
                                 y: y
-                            }, false));
+                            }));
                             break;
                         case config.terrain.grass:
                             scene.addSpirit(new game.terrain("grass", {
@@ -218,21 +249,22 @@ module game {
                                 height: h,
                                 x: x,
                                 y: y
-                            }, true));
+                            }, { isFloat: true }));
                             break;
                         case config.terrain.water:
-                            scene.addSpirit(new game.terrain("water", {
+                            newSpirit = new game.terrain("water", {
                                 width: w,
                                 height: h,
                                 x: x,
                                 y: y
-                            }, false));
+                            }, { isPenetrate: true });
+                            scene.addSpirit(newSpirit);
                             break;
                         case config.terrain.wall:
-                            addSpirit(cell, "wall", false);
+                            addSpirit(cell, "wall");
                             break;
                         case config.terrain.steel:
-                            addSpirit(cell, "steel", false);
+                            addSpirit(cell, "steel", { armor: 3 });
                             break;
                     }
 

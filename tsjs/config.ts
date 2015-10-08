@@ -96,12 +96,99 @@
     map[2][8] = {
         type: terrain.water
     }
-    map[2][2] = {
+
+    map[1][1] = {
         type: terrain.wall,
         full: terrainFull.full
     }
+    map[2][1] = {
+        type: terrain.wall,
+        full: terrainFull.full
+    }
+    map[3][1] = {
+        type: terrain.wall,
+        full: terrainFull.full
+    }
+    map[4][1] = {
+        type: terrain.wall,
+        full: terrainFull.full
+    }
+    map[5][1] = {
+        type: terrain.wall,
+        full: terrainFull.top
+    }
+    map[6][0] = {
+        type: terrain.steel,
+        full: terrainFull.bottom
+    }
+    map[12][0] = { type: terrain.steel, full: terrainFull.bottom }
+
+    map[1][3] = {
+        type: terrain.wall,
+        full: terrainFull.full
+    }
+    map[2][3] = {
+        type: terrain.wall,
+        full: terrainFull.full
+    }
+    map[3][3] = {
+        type: terrain.wall,
+        full: terrainFull.full
+    }
+    map[4][3] = {
+        type: terrain.wall,
+        full: terrainFull.full
+    }
+    map[5][3] = {
+        type: terrain.wall,
+        full: terrainFull.top
+    }
+
+
+    map[3][6] = {
+        type: terrain.steel,
+        full: terrainFull.top
+    }
     //end地形初始化
 
+    map[1][12] = { type: terrain.grass };
+    map[2][12] = { type: terrain.grass };
+    map[3][12] = { type: terrain.grass };
+    map[4][12] = { type: terrain.grass };
+    map[5][12] = { type: terrain.grass };
+    map[6][12] = { type: terrain.grass };
+    map[7][12] = { type: terrain.grass };
+    map[8][12] = { type: terrain.grass };
+    map[9][12] = { type: terrain.grass };
+    map[14][11] = { type: terrain.steel, full: terrainFull.top };
 
 
+    map[9][5] = { type: terrain.steel, full: terrainFull.top };
+    map[9][6] = { type: terrain.steel, full: terrainFull.top };
+    map[9][7] = { type: terrain.steel, full: terrainFull.top };
+
+    map[10] = [{ type: terrain.steel, full: terrainFull.top }, { type: terrain.grass }, { type: terrain.empty }, { type: terrain.empty }, { type: terrain.water }, { type: terrain.water }, { type: terrain.water }, { type: terrain.water }, { type: terrain.wall }, { type: terrain.steel }, { type: terrain.steel }, { type: terrain.wall }, { type: terrain.grass }];
+    map[11][1] = { type: terrain.wall };
+    map[11][2] = { type: terrain.wall };
+    map[12][3] = { type: terrain.wall, full: terrainFull.top };
+    map[12][4] = { type: terrain.wall, full: terrainFull.right };
+    map[11][12] = { type: terrain.wall };
+    map[12][12] = { type: terrain.grass };
+    map[13][12] = { type: terrain.wall };
+    map[12][8] = { type: terrain.grass };
+    map[12][9] = { type: terrain.grass };
+    map[13][10] = { type: terrain.grass };
+    map[13][11] = { type: terrain.grass };
+
+    map[14][9] = { type: terrain.wall, full: terrainFull.right };
+    map[14][11] = { type: terrain.grass };
+    map[14][12] = { type: terrain.steel, full: terrainFull.top };
+
+    map[14][12] = { type: terrain.steel, full: terrainFull.bottom };
+    map[8][9] = { type: terrain.steel, full: terrainFull.top };
+    map[8][10] = { type: terrain.wall, full: terrainFull.top };
+    map[8][11] = { type: terrain.wall, full: terrainFull.top };
+    map[7][11] = { type: terrain.wall };
+    map[6][11] = { type: terrain.wall };
+    map[5][11] = { type: terrain.wall };
 }

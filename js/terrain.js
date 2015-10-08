@@ -7,9 +7,11 @@ var game;
 (function (game) {
     var terrain = (function (_super) {
         __extends(terrain, _super);
-        function terrain(imgKey, point, isFloat) {
+        function terrain(imgKey, point, opt) {
             _super.call(this, imgKey, point);
-            this.isFloat = isFloat;
+            this.isPenetrate = false; //子弹是否可穿过
+            this.armor = 1; //护甲  子弹攻击力低无视伤害
+            opt && common.extend(this, opt);
         }
         terrain.prototype.draw = function (canvas) {
             _super.prototype.draw.call(this, canvas);

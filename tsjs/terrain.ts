@@ -1,12 +1,13 @@
 ﻿module game {
     export class terrain extends spirit {
-        constructor(imgKey: string, point: point, isFloat: boolean) {
+        constructor(imgKey: string, point: point, opt?) {
 
             super(imgKey, point)
-
-            this.isFloat = isFloat;
+            opt && common.extend(this, opt);
 
         }
+        isPenetrate = false; //子弹是否可穿过
+        armor = 1; //护甲  子弹攻击力低无视伤害
         draw(canvas: CanvasRenderingContext2D) {
             super.draw(canvas);
 
