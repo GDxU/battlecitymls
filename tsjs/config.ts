@@ -31,7 +31,7 @@
         LU,
         RU,
         LB,
-        RB 
+        RB
     }
     export enum terrainPortion {
         LU, //左上
@@ -75,9 +75,30 @@
         type: terrain.wall,
         full: terrainFull.RB
     }
+
+    map[config.gameCellHeight - 2][5] = {
+        type: terrain.wall,
+        full: terrainFull.RB
+    }
     map[config.gameCellHeight - 2][7] = {
         type: terrain.wall,
         full: terrainFull.LB
+    }
+
+
+    map[2][5] = {
+        type: terrain.steel,
+        full: terrainFull.full
+    }
+    map[2][6] = {
+        type: terrain.grass
+    }
+    map[2][8] = {
+        type: terrain.water
+    }
+    map[2][2] = {
+        type: terrain.wall,
+        full: terrainFull.full
     }
     //end地形初始化
 
