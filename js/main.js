@@ -76,6 +76,12 @@ var game;
         game.scene.addEventListener(game.playEven.longPressKeypad0, function () {
             p2.attack();
         });
+        game.scene.addEventListener(game.playEven.onwin, function () {
+            alert("你消失了所有敌人");
+        });
+        game.scene.addEventListener(game.playEven.onlose, function () {
+            alert("game over");
+        });
         console.log("start");
         var aa = new game.tank("enemy1", game.config.troops.scourge, {
             x: 0,
@@ -111,19 +117,19 @@ var game;
             height: game.config.tankSize
         }, { attackIntervale: 2000 }));
         game.scene.addSpirit(new game.tank("enemy3", game.config.troops.scourge, {
-            x: game.config.tankSize * 5,
-            y: 0,
-            width: game.config.tankSize,
-            height: game.config.tankSize
-        }, { attackIntervale: 2000 }));
-        game.scene.addSpirit(new game.tank("enemy2", game.config.troops.scourge, {
             x: game.config.tankSize * 6,
             y: 0,
             width: game.config.tankSize,
             height: game.config.tankSize
         }, { attackIntervale: 2000 }));
+        game.scene.addSpirit(new game.tank("enemy2", game.config.troops.scourge, {
+            x: game.config.tankSize * 8,
+            y: 0,
+            width: game.config.tankSize,
+            height: game.config.tankSize
+        }, { attackIntervale: 2000 }));
         game.scene.addSpirit(new game.tank("enemy1", game.config.troops.scourge, {
-            x: game.config.tankSize * 7,
+            x: game.config.tankSize * 10,
             y: 0,
             width: game.config.tankSize,
             height: game.config.tankSize
@@ -215,7 +221,7 @@ var game;
                                 height: h,
                                 x: x,
                                 y: y
-                            }));
+                            }, { troops: game.config.troops.sentinel }));
                             break;
                         case game.config.terrain.grass:
                             game.scene.addSpirit(new game.terrain("grass", {
@@ -245,6 +251,7 @@ var game;
             }
         })();
         //end生成地形精灵
+        game.scene.start();
     };
 })(game || (game = {}));
 window.addEventListener("load", function () {

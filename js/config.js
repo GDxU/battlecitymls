@@ -8,6 +8,7 @@ var game;
         (function (troops) {
             troops[troops["sentinel"] = 0] = "sentinel";
             troops[troops["scourge"] = 1] = "scourge";
+            troops[troops["neutral"] = 2] = "neutral"; //中立
         })(config.troops || (config.troops = {}));
         var troops = config.troops;
         (function (terrain) {

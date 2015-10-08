@@ -1,6 +1,8 @@
 ﻿module game {
     export enum playEven {
         onredraw, //重绘事件
+        onwin, //胜利
+        onlose, //失败
         longPressL,  //长按
         longPressR,//长按
         longPressU,//长按
@@ -33,6 +35,7 @@
         fps = 10000 / 60;
         lasttime = new Date();
         interval: number;
+        isGmaeOver = false;
         constructor(canvas: CanvasRenderingContext2D) {
             this.canvas = canvas;
             this.canvasElement = canvas.canvas;
@@ -45,6 +48,8 @@
             //this.interval = setInterval(() => {
                 
             //}, this.fps);
+        }
+        start = () => {
             this.startDraw();
         }
         startDraw = () => {
@@ -135,15 +140,38 @@
             // #endregion
 
             this.canvas.clearRect(0, 0, this.width, this.height);
+            var curSpirit, symbolCount = 0, tankCount = 0, enemyCount = 0;
             for (var i = 0; i < this.spirits.length; i++) {
-                if (this.spirits[i].isDel) {
+                curSpirit = this.spirits[i];
+                if (curSpirit.isDel) {
                     //排除已经删除的
-                    this.removeSpirit(this.spirits[i]);
+                    this.removeSpirit(curSpirit);
                     i--;
                     continue;
                 }
+                curSpirit.draw(this.canvas);
 
-                this.spirits[i].draw(this.canvas);
+
+                if (curSpirit.constructor === game.tank) {
+                    //已方坦克
+                    if (curSpirit.troops === config.troops.sentinel) tankCount++;
+                    //敌方坦克
+                    if (curSpirit.troops === config.troops.scourge) enemyCount++;
+                }
+                if (curSpirit.constructor === game.terrain) {
+                    //基地
+                    if (curSpirit.troops === config.troops.sentinel) symbolCount++;
+                }
+
+            }
+            if (this.isGmaeOver) return;
+            if (symbolCount === 0 || tankCount === 0) {
+                this.isGmaeOver = true;
+                this.trigger(playEven.onlose);
+            }
+            if (enemyCount === 0) {
+                this.isGmaeOver = true;
+                this.trigger(playEven.onwin);
             }
         };
 
@@ -178,7 +206,7 @@
                 two_y1 = two.point.y,
                 two_y2 = two.point.y + two.point.width - 1;
 
-           
+
             if ((two_x1 <= one_x1 && one_x1 <= two_x2) && (two_y1 <= one_y1 && one_y1 <= two_y2)) {
                 return true;
             } else if ((two_x1 <= one_x2 && one_x2 <= two_x2) && (two_y1 <= one_y1 && one_y1 <= two_y2)) {
@@ -200,7 +228,7 @@
             }
         }
 
-        
+
 
     }
 }
