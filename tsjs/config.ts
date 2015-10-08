@@ -123,6 +123,7 @@
         full: terrainFull.bottom
     }
     map[12][0] = { type: terrain.steel, full: terrainFull.bottom }
+    map[7][2] = { type: terrain.steel, full: terrainFull.bottom }
 
     map[1][3] = {
         type: terrain.wall,

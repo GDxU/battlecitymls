@@ -113,6 +113,7 @@ var game;
             full: terrainFull.bottom
         };
         config.map[12][0] = { type: terrain.steel, full: terrainFull.bottom };
+        config.map[7][2] = { type: terrain.steel, full: terrainFull.bottom };
         config.map[1][3] = {
             type: terrain.wall,
             full: terrainFull.full
