@@ -11,8 +11,9 @@
     game.config.maxHeight = config.tankSize * config.gameCellHeight;
 
     export enum troops {
-        sentinel,
-        scourge
+        sentinel, //近卫
+        scourge,  //天灾
+        neutral //中立
     }
     export enum terrain { //地形
         empty,

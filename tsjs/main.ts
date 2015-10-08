@@ -88,7 +88,12 @@ module game {
         scene.addEventListener(playEven.longPressKeypad0, function () {
             p2.attack();
         });
-
+        scene.addEventListener(playEven.onwin, function () {
+            alert("你消失了所有敌人");
+        });
+        scene.addEventListener(playEven.onlose, function () {
+            alert("game over");
+        });
         console.log("start");
 
 
@@ -126,19 +131,19 @@ module game {
             height: config.tankSize
         }, { attackIntervale: 2000 }));
         scene.addSpirit(new game.tank("enemy3", config.troops.scourge, {
-            x: config.tankSize * 5,
-            y: 0,
-            width: config.tankSize,
-            height: config.tankSize
-        }, { attackIntervale: 2000 }));
-        scene.addSpirit(new game.tank("enemy2", config.troops.scourge, {
             x: config.tankSize * 6,
             y: 0,
             width: config.tankSize,
             height: config.tankSize
         }, { attackIntervale: 2000 }));
+        scene.addSpirit(new game.tank("enemy2", config.troops.scourge, {
+            x: config.tankSize * 8,
+            y: 0,
+            width: config.tankSize,
+            height: config.tankSize
+        }, { attackIntervale: 2000 }));
         scene.addSpirit(new game.tank("enemy1", config.troops.scourge, {
-            x: config.tankSize * 7,
+            x: config.tankSize * 10,
             y: 0,
             width: config.tankSize,
             height: config.tankSize
@@ -241,7 +246,7 @@ module game {
                                 height: h,
                                 x: x,
                                 y: y
-                            }));
+                            }, { troops: config.troops.sentinel }));
                             break;
                         case config.terrain.grass:
                             scene.addSpirit(new game.terrain("grass", {
@@ -274,6 +279,7 @@ module game {
         })();
         //end生成地形精灵
 
+        scene.start();
     };
 }
 window.addEventListener("load", function () {

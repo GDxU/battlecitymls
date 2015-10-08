@@ -2,16 +2,18 @@ var game;
 (function (game) {
     (function (playEven) {
         playEven[playEven["onredraw"] = 0] = "onredraw";
-        playEven[playEven["longPressL"] = 1] = "longPressL";
-        playEven[playEven["longPressR"] = 2] = "longPressR";
-        playEven[playEven["longPressU"] = 3] = "longPressU";
-        playEven[playEven["longPressD"] = 4] = "longPressD";
-        playEven[playEven["longPressKeypad0"] = 5] = "longPressKeypad0";
-        playEven[playEven["longPressAlphaA"] = 6] = "longPressAlphaA";
-        playEven[playEven["longPressAlphaW"] = 7] = "longPressAlphaW";
-        playEven[playEven["longPressAlphaS"] = 8] = "longPressAlphaS";
-        playEven[playEven["longPressAlphaD"] = 9] = "longPressAlphaD";
-        playEven[playEven["longPressAlphaJ"] = 10] = "longPressAlphaJ";
+        playEven[playEven["onwin"] = 1] = "onwin";
+        playEven[playEven["onlose"] = 2] = "onlose";
+        playEven[playEven["longPressL"] = 3] = "longPressL";
+        playEven[playEven["longPressR"] = 4] = "longPressR";
+        playEven[playEven["longPressU"] = 5] = "longPressU";
+        playEven[playEven["longPressD"] = 6] = "longPressD";
+        playEven[playEven["longPressKeypad0"] = 7] = "longPressKeypad0";
+        playEven[playEven["longPressAlphaA"] = 8] = "longPressAlphaA";
+        playEven[playEven["longPressAlphaW"] = 9] = "longPressAlphaW";
+        playEven[playEven["longPressAlphaS"] = 10] = "longPressAlphaS";
+        playEven[playEven["longPressAlphaD"] = 11] = "longPressAlphaD";
+        playEven[playEven["longPressAlphaJ"] = 12] = "longPressAlphaJ";
     })(game.playEven || (game.playEven = {}));
     var playEven = game.playEven;
     (function (ctrKey) {
@@ -33,10 +35,13 @@ var game;
             var _this = this;
             this.fps = 10000 / 60;
             this.lasttime = new Date();
+            this.isGmaeOver = false;
             this.init = function () {
                 _this.buildEvent();
                 //this.interval = setInterval(() => {
                 //}, this.fps);
+            };
+            this.start = function () {
                 _this.startDraw();
             };
             this.startDraw = function () {
@@ -114,14 +119,39 @@ var game;
                 }
                 // #endregion
                 _this.canvas.clearRect(0, 0, _this.width, _this.height);
+                var curSpirit, symbolCount = 0, tankCount = 0, enemyCount = 0;
                 for (var i = 0; i < _this.spirits.length; i++) {
-                    if (_this.spirits[i].isDel) {
+                    curSpirit = _this.spirits[i];
+                    if (curSpirit.isDel) {
                         //排除已经删除的
-                        _this.removeSpirit(_this.spirits[i]);
+                        _this.removeSpirit(curSpirit);
                         i--;
                         continue;
                     }
-                    _this.spirits[i].draw(_this.canvas);
+                    curSpirit.draw(_this.canvas);
+                    if (curSpirit.constructor === game.tank) {
+                        //已方坦克
+                        if (curSpirit.troops === game.config.troops.sentinel)
+                            tankCount++;
+                        //敌方坦克
+                        if (curSpirit.troops === game.config.troops.scourge)
+                            enemyCount++;
+                    }
+                    if (curSpirit.constructor === game.terrain) {
+                        //基地
+                        if (curSpirit.troops === game.config.troops.sentinel)
+                            symbolCount++;
+                    }
+                }
+                if (_this.isGmaeOver)
+                    return;
+                if (symbolCount === 0 || tankCount === 0) {
+                    _this.isGmaeOver = true;
+                    _this.trigger(playEven.onlose);
+                }
+                if (enemyCount === 0) {
+                    _this.isGmaeOver = true;
+                    _this.trigger(playEven.onwin);
                 }
             };
             //测试一个spirit的是不是碰到边界

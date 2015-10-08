@@ -11,6 +11,7 @@ var game;
             _super.call(this, imgKey, point);
             this.isPenetrate = false; //子弹是否可穿过
             this.armor = 1; //护甲  子弹攻击力低无视伤害
+            this.troops = game.config.troops.neutral;
             opt && common.extend(this, opt);
         }
         terrain.prototype.draw = function (canvas) {
