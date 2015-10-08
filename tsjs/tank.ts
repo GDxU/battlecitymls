@@ -7,6 +7,7 @@
     }
     export class tank extends spirit {
         troops: config.troops
+        ATK = 1; //攻击力
         constructor(imgKey: string, troops: config.troops, point: point, opt?) {
             super(imgKey, point);
             opt && common.extend(this, opt);
@@ -209,7 +210,8 @@
                 y: y
             }, {
                     troops: this.troops,
-                    tankId: this.id
+                    tankId: this.id,
+                    ATK: this.ATK
                 }));
         }
 
