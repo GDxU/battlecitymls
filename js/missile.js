@@ -22,8 +22,8 @@ var game;
                 for (var t = 0, tlen = game.scene.spirits.length; t < tlen; t++) {
                     two = game.scene.spirits[t];
                     isOverlap = game.scene.testOverlap(one, two);
-                    if (two.troops === _this.troops) {
-                        //无视与自己队伍的精灵及子弹相撞
+                    if (two.troops === _this.troops && two.constructor !== game.terrain) {
+                        //无视与自己队伍的精灵及子弹相撞  但可以破坏自己的基地
                         continue;
                     }
                     if (two.constructor === game.missile && two.troops !== _this.troops && isOverlap) {
